@@ -1,4 +1,90 @@
-<h2>Hello World</h2>
-<p>
-  The time is now: <%= Time.now %>
-</p>
+<!--
+  
+      canvas {
+        padding: 0;
+        margin: auto;
+        display: block;
+        width: 800px;
+      }
+-->
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <style>
+      canvas.ridge {border-style: ridge;}
+      canvas {     
+            border: 1px solid black;
+            border-radius: 0px;
+        }
+        body {
+          margin: 0;
+          padding: 0;
+        }
+    </style>
+  </head>
+    <body onload="displayGrid()">
+      <h2>Hello World</h2>
+      <p>
+        The time is now: <%= Time.now %>
+      </p>
+      <div>
+        <canvas id="canvas" width="400" height="400" onclick="MyFunctionToDrawLines()" style = "border:1px solid #000000;" ></canvas>
+        <select id="myOptions" name="myOptions" onchange="//seleccionar los elementos y activar los scripts para cada uno, cambiar a botones">
+            <option value="lines">lineas</option>
+            <option value="bielas">bielas</option>
+            <option value="rotulas">rotulas</option>
+            <option value="fuerzas">fuerzas</option>
+            <option value="apoyos">apoyos</option>
+        </select>
+      </div> 
+      <script> 
+      var gridOptions = {
+          color: '#f2f2f2',
+          GridSize: 15,
+          LinesSize: 1
+      };   
+      function displayGrid() {
+          var i, Height, Width, GridSize;
+          canvas = document.getElementById("canvas");
+          if (canvas.getContext) {
+              ctx = canvas.getContext("2d");
+              var Height = canvas.height;
+              var Width = canvas.width;
+              ctx.strokeStyle = gridOptions.color;
+              ctx.lineWidth = parseInt(gridOptions.LinesSize);
+              GridSize = 0;
+              GridSize = parseInt(gridOptions.GridSize);
+              for (i = 0; i < Height; i += GridSize) {
+                  ctx.moveTo(0, i);
+                  ctx.lineTo(Width, i);
+                  ctx.stroke();
+              }
+              for (i = 0; i < Width; i += GridSize) {
+                  ctx.moveTo(i, 0);
+                  ctx.lineTo(i, Height);
+                  ctx.stroke();
+              }
+          }
+      }
+      function MyFunctionToDrawLines(){
+        var coords = [];
+        var canvas = document.getElementById('canvas');
+        var context = canvas.getContext("2d");
+        canvas.addEventListener('click', function (event) {
+            var coord = { "x": event.pageX - canvas.offsetLeft, "y": event.pageY - canvas.offsetTop};
+            coords.push(coord);
+            var max = coords.length - 1;
+            if (typeof coords[max - 1] !== "undefined") {
+                var curr = coords[max], prev = coords[max - 1];
+                context.beginPath();
+                context.moveTo(prev.x, prev.y);
+                context.lineTo(curr.x, curr.y);
+                context.strokeStyle = 'black';
+                context.stroke();
+            }
+        });
+        console.log(coords);
+      }
+      </script>
+    </body>
+</html>  
