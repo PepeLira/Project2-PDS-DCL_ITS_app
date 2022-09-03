@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  description: MyString
+  extern_joins_points: 1
+  forces_moments_points: 1
+  con_rod_points: 1
+  ball_joint_points: 1
+
+two:
+  title: MyString
+  description: MyString
+  extern_joins_points: 1
+  forces_moments_points: 1
+  con_rod_points: 1
+  ball_joint_points: 1
