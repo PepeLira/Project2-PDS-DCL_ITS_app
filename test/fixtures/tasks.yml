@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  extern_joins_exp: 1
+  forces_moments_exp: 1
+  con_rod_exp: 1
+  ball_joint_exp: 1
+
+two:
+  extern_joins_exp: 1
+  forces_moments_exp: 1
+  con_rod_exp: 1
+  ball_joint_exp: 1
