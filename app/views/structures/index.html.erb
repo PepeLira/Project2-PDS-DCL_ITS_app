@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Structures</h1>
+
+<div id="structures">
+  <% @structures.each do |structure| %>
+    <%= render structure %>
+    <p>
+      <%= link_to "Show this structure", structure %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New structure", new_structure_path %>

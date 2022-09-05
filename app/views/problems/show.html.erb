@@ -1,0 +1,19 @@
+
+
+<div class="jumbotron text-center">
+   <h2>Problems</h2>
+</div>
+
+<div class="container">
+  <p style="color: green"><%= notice %></p>
+  <h3> Problem Id: <%= @problem.id %></h3>
+  <%= render @problem %>
+
+  <div>
+    <%= link_to "Edit problem", edit_problem_path(@problem) %>
+  </div>
+  <br>
+  
+  <%= button_to "Delete problem", @problem, method: :delete, :class => "btn btn-danger" %>
+  
+</div>

@@ -1,0 +1,15 @@
+
+<div class="jumbotron text-center">
+  <h2>Editing problem</h2> 
+</div>
+
+<div class="container">
+  <%= render "form", problem: @problem %>
+  <br>
+  <div>
+    <td>   
+      <%= link_to "Show this problem", @problem, :class => "btn btn-primary" %> 
+      <%= link_to "Back to problems", problems_path, :class => "btn btn-primary" %>
+    </td>
+  </div>
+</div>

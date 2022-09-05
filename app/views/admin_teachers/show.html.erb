@@ -1,0 +1,19 @@
+
+
+<div class="jumbotron text-center">
+  <h2>Admin Teachers</h2>
+</div>
+
+<div class="container">
+<p style="color: green"><%= notice %></p>
+<h3> Teacher N°: <%= @admin_teacher.id %></h3>
+<%= render @admin_teacher %>
+
+<div>
+  <%= link_to "Edit admin teacher", edit_admin_teacher_path(@admin_teacher) %>
+</div>
+<br>
+<td>
+  <%= button_to "Destroy this admin teacher", @admin_teacher, method: :delete, :class => "btn btn-danger" %>
+</td>
+</div>

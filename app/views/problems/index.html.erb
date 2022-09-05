@@ -1,0 +1,28 @@
+
+
+<div class="jumbotron text-center">
+  <h2>Problems</h2> 
+</div>
+
+<div id="problems">
+  <div class="container">
+    <div class="row">
+      <% @problems.each do |problem| %>
+        <div class="col-sm-4">
+          <%= render problem %>
+          <p>
+            <%= link_to "Show this problem", problem %>
+          </p>
+          <br>
+        </div>
+      <% end %>
+    </div> 
+  </div>
+</div>
+
+<div class="container">
+  <td>
+    <%= link_to "New problem", new_problem_path, :class => "btn btn-primary" %>    
+  </td>
+</div>
+
