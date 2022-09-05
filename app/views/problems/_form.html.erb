@@ -1,0 +1,57 @@
+<%= form_with(model: problem) do |form| %>
+  <% if problem.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(problem.errors.count, "error") %> prohibited this problem from being saved:</h2>
+
+      <ul>
+        <% problem.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :admin_teacher_id, style: "display: block" %>
+    <%= form.number_field :admin_teacher_id %>
+  </div>
+
+  <div>
+    <%= form.label :structure_id, style: "display: block" %>
+    <%= form.number_field :structure_id %>
+  </div>
+
+  <div>
+    <%= form.label :title, style: "display: block" %>
+    <%= form.text_field :title %>
+  </div>
+
+  <div>
+    <%= form.label :description, style: "display: block" %>
+    <%= form.text_field :description %>
+  </div>
+
+  <div>
+    <%= form.label :extern_joins_points, style: "display: block" %>
+    <%= form.number_field :extern_joins_points %>
+  </div>
+
+  <div>
+    <%= form.label :forces_moments_points, style: "display: block" %>
+    <%= form.number_field :forces_moments_points %>
+  </div>
+
+  <div>
+    <%= form.label :con_rod_points, style: "display: block" %>
+    <%= form.number_field :con_rod_points %>
+  </div>
+
+  <div>
+    <%= form.label :ball_joint_points, style: "display: block" %>
+    <%= form.number_field :ball_joint_points %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

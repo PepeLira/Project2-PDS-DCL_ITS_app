@@ -1,0 +1,12 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @admin_teacher %>
+
+<div>
+  <%= link_to "Edit this admin teacher", edit_admin_teacher_path(@admin_teacher) %>   |
+  <%= link_to "Back to admin teachers", admin_teachers_path %>    |
+  <%= link_to "Go to problems", problems_path %>  
+
+</div>
+<br><%= button_to "Destroy this admin teacher", @admin_teacher, method: :delete %>
+
