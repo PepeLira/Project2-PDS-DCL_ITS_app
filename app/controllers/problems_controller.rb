@@ -12,7 +12,15 @@ class ProblemsController < ApplicationController
 
   # GET /problems/new
   def new
+    @admin_teacher = AdminTeacher.first
+    @new_structure = Structure.new
+    if Problem.first.present?
+      @title = "Problem #" + (Problem.last.id + 1).to_s
+    else
+      @title = "Problem #1" 
+    end
     @problem = Problem.new
+    @problem.build_structure
   end
 
   # GET /problems/1/edit
@@ -22,7 +30,6 @@ class ProblemsController < ApplicationController
   # POST /problems or /problems.json
   def create
     @problem = Problem.new(problem_params)
-
     respond_to do |format|
       if @problem.save
         format.html { redirect_to problem_url(@problem), notice: "Problem was successfully created." }
@@ -65,6 +72,7 @@ class ProblemsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def problem_params
-      params.require(:problem).permit(:admin_teacher_id, :structure_id, :title, :description, :extern_joins_points, :forces_moments_points, :con_rod_points, :ball_joint_points)
+      params.require(:problem).permit(:admin_teacher_id, :title, :description, :extern_joins_points, :forces_moments_points, 
+            :con_rod_points, :ball_joint_points, structure_attributes: [:nodes_list, :segments_list, :struct_link, :force_values, :moment_values, :admin_teacher_id])
     end
 end

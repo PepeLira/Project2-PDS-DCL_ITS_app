@@ -40,7 +40,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_03_004703) do
 
   create_table "problems", force: :cascade do |t|
     t.string "title"
-    t.string "description"
+    t.text "description"
     t.integer "extern_joins_points"
     t.integer "forces_moments_points"
     t.integer "con_rod_points"
@@ -73,6 +73,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_03_004703) do
 
   create_table "structures", force: :cascade do |t|
     t.string "moment_reference"
+    t.string "nodes_list"
+    t.string "segments_list"
+    t.string "struct_link"
+    t.string "force_values"
+    t.string "moment_values"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "admin_teacher_id", null: false
