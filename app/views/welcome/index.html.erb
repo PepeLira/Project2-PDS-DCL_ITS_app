@@ -1,19 +1,46 @@
 <head>
     <meta name=viewport content="width=device-width,initial-scale=1">  
     <meta charset="utf-8"/>
-    <script src="https://www.geogebra.org/apps/deployggb.js"></script>
 </head>
 
 <body>
 
-    <div id="ggb-element"></div> 
+    <script type="text/javascript" src="https://www.geogebra.org/apps/deployggb.js"></script>
 
-    <script>  
-        var params = {"geometry": "graphing", "width": 800, "height": 600, "showToolBar": true, "showAlgebraInput": true, "showMenuBar": true };
-        var applet = new GGBApplet(params, true);
-        window.addEventListener("load", function() { 
-            applet.inject('ggb-element');
-        });
+    <script type="text/javascript">  
+        // var params = {"appName": "classic", "width": 800, "height": 600, "showToolBar": true, "showAlgebraInput": false, "showMenuBar": true };
+        var params = {
+                        "appName": "classic",
+                        "width":800,
+                        "height":600,
+                        "showToolBar":true,
+                        "borderColor":null,
+                        "showMenuBar":true,
+                        "customToolbar":"0 || 1 || 15 || 7 ",
+                        "allowStyleBar":true,
+                        "showAlgebraInput":true,
+                        "enableLabelDrags":false,
+                        "enableShiftDragZoom":true,
+                        "capturingThreshold":null,
+                        "showToolBarHelp":false,
+                        "errorDialogsActive":true,
+                        "showTutorialLink":true,
+                        "showLogging":true,
+                        "useBrowserForJS":true,
+                        "perspective":2,
+                        "grid":true};
+
+        params.appletOnLoad = function(api) {
+            api.setGridVisible(true);
+        }
+        var applet = new GGBApplet(params, '5.0', 'applet_container');
+
+        window.onload = function() { 
+            // debugger;
+            applet.inject();
+            }
     </script>
+
+    <div id="applet_container"></div>
 
 </body>
