@@ -11,45 +11,189 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :admin_teacher_id, style: "display: block" %>
-    <%= form.number_field :admin_teacher_id %>
-  </div>
+  <% form.number_field :admin_teacher_id, :value => @admin_teacher.id %>
 
-  <div>
+  <div class="field">
     <%= form.label :structure_id, style: "display: block" %>
     <%= form.number_field :structure_id %>
   </div>
 
-  <div>
+  <div class="field">
     <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
+    <%= form.text_field :title, :value => @title%>
   </div>
 
-  <div>
+  <div class="field">
     <%= form.label :description, style: "display: block" %>
-    <%= form.text_field :description %>
+    <%= form.text_area :description %>
   </div>
 
-  <div>
-    <%= form.label :extern_joins_points, style: "display: block" %>
-    <%= form.number_field :extern_joins_points %>
+  <div class="field">
+    <%= form.label "Dibujar el diagrama para un DCL", style: "display: block" %>
+
+    <script type="text/javascript" src="https://www.geogebra.org/apps/deployggb.js"></script>
+    <script type="text/javascript">
+      // var myNodes = document.getElementsByName("myNodes")[0]; // lista de puntos
+      var mySegments = []; // lista de conexiones
+      var mySavedLink = ''; //saved link total state
+      var params = {"appName": "classic",
+                      "width":800,
+                      "height":600,
+                      "showToolBar":true,
+                      "borderColor":null,
+                      "showMenuBar":true,
+                      "customToolbar":"0 || 1 || 15 || 7 ",
+                      "allowStyleBar":true,
+                      "showAlgebraInput":true,
+                      "enableLabelDrags":false,
+                      "enableShiftDragZoom":true,
+                      "capturingThreshold":null,
+                      "showToolBarHelp":false,
+                      "errorDialogsActive":true,
+                      "showTutorialLink":true,
+                      "showLogging":true,
+                      "useBrowserForJS":true,
+                      "perspective":2,
+                      "grid":true};
+      params.appletOnLoad = function(api) {
+          api.setGridVisible(true);
+          var strLength = 150;
+          var myNodes = document.getElementsByName("myNodes")[0]; // lista de puntos
+          var textarea1 = document.getElementsByName("textarea1")[0];
+          var textarea2 = document.getElementsByName("textarea2")[0];
+          var consState = document.getElementsByName("consState")[0];
+          function addListener(objName) { 
+              textarea1.value = "add: " + objName + "\n" + textarea1.value.substring(0, strLength );	
+              printConstructionState();
+          }
+
+          function removeListener(objName) {
+              textarea1.value = "remove: " + objName + "\n" + textarea1.value.substring(0, strLength );	
+              printConstructionState();
+          }
+
+          function renameListener(oldObjName, newObjName) {
+              textarea1.value = "rename: " + objName + "\n" + textarea1.value.substring(0, strLength );	
+              printConstructionState();
+          }
+
+          function updateListener(objName) {
+              strVal = api.getValueString(objName);
+              textarea2.value = strVal + "\n" + textarea2.value.substring(0, strLength );
+          }
+
+          function clearListener() {
+              textarea1.value = "";
+              textarea2.value = "";
+              textarea1.value = "construction cleared";
+              consState.value = "";
+          }
+
+          function printConstructionState() {
+              var objNumber = api.getObjectNumber();
+              var strState = "Number of objects: " + objNumber;
+              var subl = []; //lista de puntos
+              var node_value = {
+                    nombre: '',
+                    tipo: 0,
+                    x: 0,
+                    y: 0
+                };
+              var lconx = []; //lista conexiones
+              for (i=0; i < objNumber; i++) {
+                  var subl2 = []; // lista por punto
+                  var lconx2 = [];// lista por conexion
+                  strName = api.getObjectName(i);                    
+                  strType = api.getObjectType(strName);                    
+                  if (strType === 'point') {
+                      node_value.nombre = strName;
+                      node_value.tipo = api.getPointStyle(strName);
+                      node_value.x = api.getXcoord(strName);
+                      node_value.y = api.getYcoord(strName);
+                      subl2.push(JSON.stringify(node_value));
+                      subl.push(subl2);
+                      strState += "\n" + strName+ ' x: ' + node_value.x + ' y: ' + node_value.y + ' style: '+ node_value.tipo;
+                  } else if (strType === 'segment' || strType === 'vector') {
+                      var iType = api.getDefinitionString(strName);
+                      var iLength = api.getValue(strName);
+                      strState += "\n" + iType + ' L: ' + iLength;
+                      lconx2.push(iType);
+                      lconx2.push(iLength);
+                      lconx.push(lconx2);
+                  }                    
+                  //strCommand = api.getCommandString(strName);
+                  //strapdesc = api.getValue(strName);
+                  //strState += "\n" + strType + " " + strName + ", " + strCommand + "," + strapdesc;
+              }
+              mySegments = lconx;
+              mySavedLink = api.getBase64();
+              consState.value = strState;
+              myNodes.value = subl; // lista de puntos
+          }
+          // register add, remove, rename and update listeners
+          api.registerAddListener(addListener);
+          api.registerRemoveListener(removeListener);
+          api.registerRenameListener(renameListener);
+          api.registerClearListener(clearListener);
+          api.registerUpdateListener(updateListener);
+      }
+      var applet = new GGBApplet(params, true);
+      window.addEventListener("load", function() { 
+          applet.inject('ggb-element');
+      });
+
+      function mchange(){
+          var buttonFinished = document.getElementById("isFinished");
+          var pid = document.getElementById("ihavename");
+          pid.innerHTML = applet.getBase64();
+      }  
+    </script>
+
+    <div id="ggb-element"></div> 
+
+    <h3>Construction State Listening</h3>
+
+    <%= fields_for :structure, @problem.structure do |s| %>
+      <div class="field">
+        <%= s.label :nodes_list %><br />
+        <%= s.text_area :nodes_list, name: "myNodes"%>
+      </div>
+      <div class="field">
+        <%= s.label :segments_list %><br />
+        <%= s.text_field :segments_list %>
+      </div>
+      <div class="field">
+        <%= s.label :struct_link %><br />
+        <%= s.text_field :struct_link %>
+      </div>
+      <div class="field">
+        <%= s.label :force_values %><br />
+        <%= s.text_field :force_values %>
+      </div>
+      <div class="field">
+        <%= s.label :moment_values %><br />
+        <%= s.text_field :moment_values, name: 'consState' %>
+      </div>
+    <% end %>
+
+    <div style="float: left;margin-right:20px">
+      <label>Update:</label>
+      <textarea name="textarea3" cols="35" rows="5"></textarea>
+
+      <label>Add, Remove, Rename:</label>
+      <textarea name="textarea1" cols="35" rows="5"></textarea>
+
+    </div>
+    <div style="float: left">
+      <label>Current Construction State:</label>
+      <textarea name="textarea" wrap="physical" cols="30" rows="12"></textarea>
+    </div>
+    <div>
+      <button id="isFinished" onclick="mchange()">Done</button>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :forces_moments_points, style: "display: block" %>
-    <%= form.number_field :forces_moments_points %>
-  </div>
 
-  <div>
-    <%= form.label :con_rod_points, style: "display: block" %>
-    <%= form.number_field :con_rod_points %>
-  </div>
-
-  <div>
-    <%= form.label :ball_joint_points, style: "display: block" %>
-    <%= form.number_field :ball_joint_points %>
-  </div>
   <br>
   <div>
     <%= form.submit %>

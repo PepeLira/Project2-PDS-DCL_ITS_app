@@ -12,6 +12,12 @@ class ProblemsController < ApplicationController
 
   # GET /problems/new
   def new
+    @admin_teacher = AdminTeacher.first
+    if Problem.first.present?
+      @title = "Problem #" + (Problem.last.id + 1).to_s
+    else
+      @title = "Problem #1" 
+    end
     @problem = Problem.new
   end
 
