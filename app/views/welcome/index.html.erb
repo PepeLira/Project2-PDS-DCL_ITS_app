@@ -1,4 +1,140 @@
-<h2>Hello World</h2>
-<p>
-  The time is now: <%= Time.now %>
-</p>
+<head>
+    <meta name=viewport content="width=device-width,initial-scale=1">  
+    <meta charset="utf-8"/>
+</head>
+
+<body>    
+    <script type="text/javascript" src="https://www.geogebra.org/apps/deployggb.js"></script>
+    <script type="text/javascript">
+        var mylista = []; // lista de puntos
+        var myConex = []; // lista de conexiones
+        var mySavedLink = ''; //saved link total state
+        var params = {"appName": "classic",
+                        "width":800,
+                        "height":600,
+                        "showToolBar":true,
+                        "borderColor":null,
+                        "showMenuBar":true,
+                        "customToolbar":"0 || 1 || 15 || 7 ",
+                        "allowStyleBar":true,
+                        "showAlgebraInput":true,
+                        "enableLabelDrags":false,
+                        "enableShiftDragZoom":true,
+                        "capturingThreshold":null,
+                        "showToolBarHelp":false,
+                        "errorDialogsActive":true,
+                        "showTutorialLink":true,
+                        "showLogging":true,
+                        "useBrowserForJS":true,
+                        "perspective":2,
+                        "grid":true};
+        params.appletOnLoad = function(api) {
+            api.setGridVisible(true);
+            var strLength = 150;
+            var textarea1 = document.getElementsByName("textarea1")[0];
+            var textarea2 = document.getElementsByName("textarea2")[0];
+            var consState = document.getElementsByName("consState")[0];
+            function addListener(objName) { 
+                textarea1.value = "add: " + objName + "\n" + textarea1.value.substring(0, strLength );	
+                printConstructionState();
+            }
+
+            function removeListener(objName) {
+                textarea1.value = "remove: " + objName + "\n" + textarea1.value.substring(0, strLength );	
+                printConstructionState();
+            }
+
+            function renameListener(oldObjName, newObjName) {
+                textarea1.value = "rename: " + objName + "\n" + textarea1.value.substring(0, strLength );	
+                printConstructionState();
+            }
+
+            function updateListener(objName) {
+                strVal = api.getValueString(objName);
+                textarea2.value = strVal + "\n" + textarea2.value.substring(0, strLength );
+            }
+
+            function clearListener() {
+                textarea1.value = "";
+                textarea2.value = "";
+                textarea1.value = "construction cleared";
+                consState.value = "";
+            }
+
+            function printConstructionState() {
+                var objNumber = api.getObjectNumber();
+                var strState = "Number of objects: " + objNumber;
+                var subl = []; //lista de puntos
+                var lconx = []; //lista conexiones
+                for (i=0; i < objNumber; i++) {
+                    var subl2 = []; // lista por punto
+                    var lconx2 = [];// lista por conexion
+                    strName = api.getObjectName(i);                    
+                    strType = api.getObjectType(strName);                    
+                    if (strType === 'point') {
+                        var x = api.getXcoord(strName);
+                        var y = api.getYcoord(strName);
+                        var pstl = api.getPointStyle(strName);
+                        subl2.push(strName);
+                        subl2.push(pstl);
+                        subl2.push(x);
+                        subl2.push(y);
+                        subl.push(subl2);
+                        strState += "\n" + strName+ ' x: ' + x + ' y: ' + y + ' style: '+ pstl;
+                    } else if (strType === 'segment' || strType === 'vector') {
+                        var iType = api.getDefinitionString(strName);
+                        var iLength = api.getValue(strName);
+                        strState += "\n" + iType + ' L: ' + iLength;
+                        lconx2.push(iType);
+                        lconx2.push(iLength);
+                        lconx.push(lconx2);
+                    }                    
+                    //strCommand = api.getCommandString(strName);
+                    //strapdesc = api.getValue(strName);
+                    //strState += "\n" + strType + " " + strName + ", " + strCommand + "," + strapdesc;
+                }
+                mylista = subl;
+                myConex = lconx;
+                mySavedLink = api.getBase64();
+                consState.value = strState;
+            }
+            // register add, remove, rename and update listeners
+            api.registerAddListener(addListener);
+            api.registerRemoveListener(removeListener);
+            api.registerRenameListener(renameListener);
+            api.registerClearListener(clearListener);
+            api.registerUpdateListener(updateListener);
+        }
+        var applet = new GGBApplet(params, true);
+        window.addEventListener("load", function() { 
+            applet.inject('ggb-element');
+        });
+
+        function mchange(){
+            var buttonFinished = document.getElementById("isFinished");
+            var pid = document.getElementById("ihavename");
+            pid.innerHTML = applet.getBase64();
+        }
+        
+    </script>
+<div id="ggb-element"></div> 
+    <h3>Construction State Listening</h3>
+
+        <div style="float: left;margin-right:20px">
+	        <label>Update:</label>
+			  <textarea name="textarea2" cols="35" rows="5"></textarea>
+
+			<label>Add, Remove, Rename:</label>
+      	        <textarea name="textarea1" cols="35" rows="5"></textarea>
+
+		</div>
+		<div style="float: left">
+            <label>Current Construction State:</label>
+            <textarea name="consState" wrap="physical" cols="30" rows="12"></textarea>
+        </div>
+        <div>
+            <button id="isFinished" onclick="mchange()">Done</button>
+        </div>
+        <p id="ihavename">somehting</p>
+
+</body>
