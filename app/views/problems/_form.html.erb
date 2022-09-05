@@ -11,7 +11,7 @@
     </div>
   <% end %>
 
-  <%= form.hidden_field :admin_teacher_id, :value => @admin_teacher.id %>
+  <%= form.hidden_field :admin_teacher_id, :value => 1 %>
 
   <div class="field">
     <%= form.label :title, style: "display: block" %>
@@ -24,9 +24,7 @@
   </div>
 
   <div class="field">
-    <%= form.label "Dibujar el diagrama para un DCL", style: "display: block" %>
-
-    <script type="text/javascript" src="https://www.geogebra.org/apps/deployggb.js"></script>
+    <%= form.label "Dibujar el diagrama para un DCL", style: "display: block" %>    
     <script type="text/javascript">
       // var myNodes = document.getElementsByName("myNodes")[0]; // lista de puntos
       //var mySegments = []; // lista de conexiones
@@ -53,9 +51,9 @@
       params.appletOnLoad = function(api) {
           api.setGridVisible(true);
           var strLength = 150;
-          var myNodes = document.getElementsByName("myNodes")[0]; // lista de puntos
-          var mySegments = document.getElementsByName("mySegments")[0]; // lista de segmentos y vectores
-          var mySavedLink = document.getElementsByName("mySavedLink")[0]; //saved link total state
+          var myNodes = document.getElementById("myNodes"); // lista de puntos
+          var mySegments = document.getElementById("mySegments"); // lista de segmentos y vectores
+          var mySavedLink = document.getElementById("mySavedLink"); //saved link total state
           //var textarea1 = document.getElementsByName("textarea1")[0];
           //var textarea2 = document.getElementsByName("textarea2")[0];
           //var consState = document.getElementsByName("consState")[0];
@@ -151,18 +149,18 @@
 
     <h3>Construction State Listening</h3>
 
-    <%= fields_for @new_structure do |s| %>
+    <%= form.fields_for :structure do |s| %>
       <div class="field">
         <%= s.label :nodes_list %><br />
-        <%= s.text_area :nodes_list, name: "myNodes"%>
+        <%= s.text_area :nodes_list, id: "myNodes"%>
       </div>
       <div class="field">
         <%= s.label :segments_list %><br />
-        <%= s.text_area :segments_list, name: "mySegments" %>
+        <%= s.text_area :segments_list, id: "mySegments" %>
       </div>
       <div class="field">
         <%= s.label :struct_link %><br />
-        <%= s.text_area :struct_link, name: "mySavedLink" %>
+        <%= s.text_area :struct_link, id: "mySavedLink" %>
       </div>
       <div class="field">
         <%= s.label :force_values %><br />
@@ -170,12 +168,10 @@
       </div>
       <div class="field">
         <%= s.label :moment_values %><br />
-        <%= s.text_field :moment_values, name: 'consState' %>
-      </div>        
+        <%= s.text_field :moment_values %>
+      </div> 
+      <%= s.hidden_field :admin_teacher_id, :value => 1 %>
     <% end %>
-    <%= @new_structure.admin_teacher_id = @admin_teacher.id %> 
-    <% @new_structure.save! %>
-    <%= form.hidden_field :structure_id, :value => @new_structure.id %>         
     <div>
       <button id="isFinished" onclick="mchange()">Done</button>
     </div>
