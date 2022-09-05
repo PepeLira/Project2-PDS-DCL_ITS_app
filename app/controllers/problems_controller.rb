@@ -13,6 +13,7 @@ class ProblemsController < ApplicationController
   # GET /problems/new
   def new
     @admin_teacher = AdminTeacher.first
+    @new_structure = Structure.new
     if Problem.first.present?
       @title = "Problem #" + (Problem.last.id + 1).to_s
     else
@@ -28,7 +29,6 @@ class ProblemsController < ApplicationController
   # POST /problems or /problems.json
   def create
     @problem = Problem.new(problem_params)
-
     respond_to do |format|
       if @problem.save
         format.html { redirect_to problem_url(@problem), notice: "Problem was successfully created." }

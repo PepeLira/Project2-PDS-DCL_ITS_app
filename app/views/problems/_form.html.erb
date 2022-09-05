@@ -11,12 +11,7 @@
     </div>
   <% end %>
 
-  <% form.number_field :admin_teacher_id, :value => @admin_teacher.id %>
-
-  <div class="field">
-    <%= form.label :structure_id, style: "display: block" %>
-    <%= form.number_field :structure_id %>
-  </div>
+  <%= form.hidden_field :admin_teacher_id, :value => @admin_teacher.id %>
 
   <div class="field">
     <%= form.label :title, style: "display: block" %>
@@ -34,8 +29,8 @@
     <script type="text/javascript" src="https://www.geogebra.org/apps/deployggb.js"></script>
     <script type="text/javascript">
       // var myNodes = document.getElementsByName("myNodes")[0]; // lista de puntos
-      var mySegments = []; // lista de conexiones
-      var mySavedLink = ''; //saved link total state
+      //var mySegments = []; // lista de conexiones
+      //var mySavedLink = ''; //saved link total state
       var params = {"appName": "classic",
                       "width":800,
                       "height":600,
@@ -59,34 +54,36 @@
           api.setGridVisible(true);
           var strLength = 150;
           var myNodes = document.getElementsByName("myNodes")[0]; // lista de puntos
-          var textarea1 = document.getElementsByName("textarea1")[0];
-          var textarea2 = document.getElementsByName("textarea2")[0];
-          var consState = document.getElementsByName("consState")[0];
+          var mySegments = document.getElementsByName("mySegments")[0]; // lista de segmentos y vectores
+          var mySavedLink = document.getElementsByName("mySavedLink")[0]; //saved link total state
+          //var textarea1 = document.getElementsByName("textarea1")[0];
+          //var textarea2 = document.getElementsByName("textarea2")[0];
+          //var consState = document.getElementsByName("consState")[0];
           function addListener(objName) { 
-              textarea1.value = "add: " + objName + "\n" + textarea1.value.substring(0, strLength );	
+              //textarea1.value = "add: " + objName + "\n" + textarea1.value.substring(0, strLength );	
               printConstructionState();
           }
 
           function removeListener(objName) {
-              textarea1.value = "remove: " + objName + "\n" + textarea1.value.substring(0, strLength );	
+              //textarea1.value = "remove: " + objName + "\n" + textarea1.value.substring(0, strLength );	
               printConstructionState();
           }
 
           function renameListener(oldObjName, newObjName) {
-              textarea1.value = "rename: " + objName + "\n" + textarea1.value.substring(0, strLength );	
+              //textarea1.value = "rename: " + objName + "\n" + textarea1.value.substring(0, strLength );	
               printConstructionState();
           }
 
           function updateListener(objName) {
-              strVal = api.getValueString(objName);
-              textarea2.value = strVal + "\n" + textarea2.value.substring(0, strLength );
+              //strVal = api.getValueString(objName);
+              //textarea2.value = strVal + "\n" + textarea2.value.substring(0, strLength );
           }
 
           function clearListener() {
-              textarea1.value = "";
-              textarea2.value = "";
-              textarea1.value = "construction cleared";
-              consState.value = "";
+              //textarea1.value = "";
+              //textarea2.value = "";
+              //textarea1.value = "construction cleared";
+              //consState.value = "";
           }
 
           function printConstructionState() {
@@ -98,7 +95,7 @@
                     tipo: 0,
                     x: 0,
                     y: 0
-                };
+                };          
               var lconx = []; //lista conexiones
               for (i=0; i < objNumber; i++) {
                   var subl2 = []; // lista por punto
@@ -114,21 +111,22 @@
                       subl.push(subl2);
                       strState += "\n" + strName+ ' x: ' + node_value.x + ' y: ' + node_value.y + ' style: '+ node_value.tipo;
                   } else if (strType === 'segment' || strType === 'vector') {
-                      var iType = api.getDefinitionString(strName);
-                      var iLength = api.getValue(strName);
-                      strState += "\n" + iType + ' L: ' + iLength;
-                      lconx2.push(iType);
-                      lconx2.push(iLength);
+                      var smt_vct_values = {
+                        iType: api.getDefinitionString(strName),
+                        iLength: api.getValue(strName)
+                      };
+                      strState += "\n" + smt_vct_values.iType + ' L: ' + smt_vct_values.iLength;
+                      lconx2.push(JSON.stringify(smt_vct_values));
                       lconx.push(lconx2);
                   }                    
                   //strCommand = api.getCommandString(strName);
                   //strapdesc = api.getValue(strName);
                   //strState += "\n" + strType + " " + strName + ", " + strCommand + "," + strapdesc;
               }
-              mySegments = lconx;
-              mySavedLink = api.getBase64();
-              consState.value = strState;
+              mySegments.value = lconx;
+              mySavedLink.value = api.getBase64();              
               myNodes.value = subl; // lista de puntos
+              //consState.value = strState;
           }
           // register add, remove, rename and update listeners
           api.registerAddListener(addListener);
@@ -153,18 +151,18 @@
 
     <h3>Construction State Listening</h3>
 
-    <%= fields_for :structure, @problem.structure do |s| %>
+    <%= fields_for @new_structure do |s| %>
       <div class="field">
         <%= s.label :nodes_list %><br />
         <%= s.text_area :nodes_list, name: "myNodes"%>
       </div>
       <div class="field">
         <%= s.label :segments_list %><br />
-        <%= s.text_field :segments_list %>
+        <%= s.text_area :segments_list, name: "mySegments" %>
       </div>
       <div class="field">
         <%= s.label :struct_link %><br />
-        <%= s.text_field :struct_link %>
+        <%= s.text_area :struct_link, name: "mySavedLink" %>
       </div>
       <div class="field">
         <%= s.label :force_values %><br />
@@ -173,21 +171,11 @@
       <div class="field">
         <%= s.label :moment_values %><br />
         <%= s.text_field :moment_values, name: 'consState' %>
-      </div>
+      </div>        
     <% end %>
-
-    <div style="float: left;margin-right:20px">
-      <label>Update:</label>
-      <textarea name="textarea3" cols="35" rows="5"></textarea>
-
-      <label>Add, Remove, Rename:</label>
-      <textarea name="textarea1" cols="35" rows="5"></textarea>
-
-    </div>
-    <div style="float: left">
-      <label>Current Construction State:</label>
-      <textarea name="textarea" wrap="physical" cols="30" rows="12"></textarea>
-    </div>
+    <%= @new_structure.admin_teacher_id = @admin_teacher.id %> 
+    <% @new_structure.save! %>
+    <%= form.hidden_field :structure_id, :value => @new_structure.id %>         
     <div>
       <button id="isFinished" onclick="mchange()">Done</button>
     </div>
