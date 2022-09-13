@@ -29,9 +29,30 @@ class ProblemsController < ApplicationController
 
   # POST /problems or /problems.json
   def create
+    
     @problem = Problem.new(problem_params)
+    
     respond_to do |format|
       if @problem.save
+        if @problem.step1 == "1"
+          @step1 = Step.new(title: nil, description: "nn", step_type: "Representacion", problem_id: @problem.id)
+          @step1.save
+        end
+        
+        if @problem.step2 == "1"
+          @step2 = Step.new(title: nil, description: "nn", step_type: "Determinar Cuerpos", problem_id: @problem.id)
+          @step2.save
+        end
+        
+        if @problem.step3 == "1"
+          @step3 = Step.new(title: nil, description: "nn", step_type: "DCL", problem_id: @problem.id)
+          @step3.save
+        end
+    
+        if @problem.step4 == "1"
+          @step4 = Step.new(title: nil, description: "nn", step_type: "Ecuaciones", problem_id: @problem.id)
+          @step4.save
+        end
         format.html { redirect_to problem_url(@problem), notice: "Problem was successfully created." }
         format.json { render :show, status: :created, location: @problem }
       else
@@ -81,6 +102,10 @@ class ProblemsController < ApplicationController
         :con_rod_points, 
         :ball_joint_points, 
         :image, 
+        :step1,
+        :step2,
+        :step3,
+        :step4,
         structure_attributes: [:nodes_list, :segments_list, :struct_link, :force_values, :moment_values, :admin_teacher_id]
         )
     end
