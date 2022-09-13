@@ -44,6 +44,26 @@
 
     <div id="ggb-element"></div> 
 
+    <h3>Pasos</h3>
+    <div>
+      <td>
+        <%= form.check_box :step1 %>
+        Representacion<br>   
+      </td>
+      <td>
+        <%= form.check_box :step2 %>
+        Determinar Cuerpos<br>  
+      </td>
+      <td>
+        <%= form.check_box :step3 %>
+        DCL<br>    
+      </td>
+      <td>
+        <%= form.check_box :step4 %>
+        Ecuaciones<br>    
+      </td>
+    </div>
+
     <h3>Construction State Listening</h3>
 
     <%= form.fields_for :structure do |s| %>
@@ -69,12 +89,7 @@
       </div> 
       <%= s.hidden_field :admin_teacher_id, :value => 1 %>
     <% end %>
-    <div>
-      <button id="isFinished" onclick="mchange()">Done</button>
-    </div>
   </div>
-
-
   <br>
   <div>
     <%= form.submit %>

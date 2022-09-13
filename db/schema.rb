@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_13_013720) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_13_060034) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -92,11 +92,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_13_013720) do
   create_table "steps", force: :cascade do |t|
     t.string "title"
     t.string "description"
-    t.string "type"
+    t.string "step_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "task_id", null: false
-    t.index ["task_id"], name: "index_steps_on_task_id"
+    t.bigint "problem_id", null: false
+    t.index ["problem_id"], name: "index_steps_on_problem_id"
   end
 
   create_table "structures", force: :cascade do |t|
@@ -142,7 +142,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_13_013720) do
   add_foreign_key "problems", "admin_teachers"
   add_foreign_key "problems", "structures"
   add_foreign_key "responses", "steps"
-  add_foreign_key "steps", "tasks"
+  add_foreign_key "steps", "problems"
   add_foreign_key "structures", "admin_teachers"
   add_foreign_key "tasks", "problems"
 end
