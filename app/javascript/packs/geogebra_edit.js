@@ -4,7 +4,7 @@ var params = {"appName": "classic",
                 "showToolBar":true,
                 "borderColor":null,
                 "showMenuBar":true,
-                "customToolbar":"0 || 1 || 15 || 7 ",
+                "customToolbar":"0 || 1 || 15 || 7 || 38 || 36 || 17",
                 "allowStyleBar":true,
                 "showAlgebraInput":true,
                 "enableLabelDrags":false,
@@ -15,10 +15,12 @@ var params = {"appName": "classic",
                 "showTutorialLink":true,
                 "showLogging":true,
                 "useBrowserForJS":true,
+                "enableShiftDragZoom": false,
                 "perspective":2,
                 "grid":true};
 params.appletOnLoad = function(api) {
     api.setGridVisible(true);
+    api.setPointCapture(1,2)
     var strLength = 150;
     var myNodes = document.getElementById("myNodes"); // lista de puntos
     var mySegments = document.getElementById("mySegments"); // lista de segmentos y vectores
