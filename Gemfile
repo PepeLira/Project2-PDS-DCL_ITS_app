@@ -44,6 +44,9 @@ gem "bootsnap", require: false
 
 gem "pry", '~> 0.13.1'
 
+# Active storage gem
+gem 'activestorage'
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 

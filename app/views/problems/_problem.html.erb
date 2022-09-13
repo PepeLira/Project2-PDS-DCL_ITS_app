@@ -11,8 +11,14 @@
 
   <p>
     <strong>Title:</strong>
-    <%= problem.title %>
+    <%= problem.title%>
   </p>
+
+  <% if problem.image.attached? %>
+    <p>
+      <%= image_tag problem.image, width: '100%', height: '100%'%>
+    </p>
+  <% end %>
 
   <p>
     <strong>Description:</strong>

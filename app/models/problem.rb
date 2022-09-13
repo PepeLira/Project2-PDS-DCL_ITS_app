@@ -4,4 +4,5 @@ class Problem < ApplicationRecord
     has_one :task
     has_many :steps
     accepts_nested_attributes_for :structure
+    has_one_attached :image
 end
