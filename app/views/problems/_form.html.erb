@@ -19,6 +19,15 @@
   </div>
 
   <div class="field">
+    <% if @problem.image.attached? %>
+      <%= image_tag @problem.image, style: "width: 200px; display: block"%>
+    <% end %>
+
+    <% form.label :image %>
+    <%= form.file_field :image, class: "form-control"%>
+  </div>
+
+  <div class="field">
     <%= form.label :description, style: "display: block" %>
     <%= form.text_area :description %>
   </div>
