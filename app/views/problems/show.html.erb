@@ -46,6 +46,8 @@
   <em>ΣFx = <%= @forces_ecuation_x %></em><br>
   <em>ΣFy = <%= @forces_ecuation_y %></em><br>
   <em>ΣM = <%= @moment_ecuation %></em><br>
+  <h3>Pasos</h3>
+  <em><%= @current_steps.to_s %></em><br>
   <div><br>
     <%= link_to "Edit problem", edit_problem_path(@problem) %>
   </div>
