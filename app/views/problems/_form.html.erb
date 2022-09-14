@@ -81,11 +81,11 @@
       </div>
       <div class="field">
         <%= s.label :force_values %><br />
-        <%= s.text_field :force_values %>
+        <%= s.text_area :force_values, id: "myForceValues" %>
       </div>
       <div class="field">
         <%= s.label :moment_values %><br />
-        <%= s.text_field :moment_values %>
+        <%= s.text_area :moment_values, id: "myMomentumValues" %>
       </div> 
       <%= s.hidden_field :admin_teacher_id, :value => 1 %>
     <% end %>
