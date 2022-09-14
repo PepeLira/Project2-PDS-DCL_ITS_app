@@ -38,4 +38,59 @@ class Problem < ApplicationRecord
         @step4
     end
 
+
+    def get_supports_points
+        supports_count = structure.support_count
+        builtin = structure.has_support?("empotrado")
+        slider = structure.has_support?("deslizante")
+        fixed = structure.has_support?("fijo")
+
+        if builtin && slider && fixed
+            if supports_count == 3
+                @difficulty_b = 50
+            elsif supports_count >= 8
+                @difficulty_b = 100
+            elsif supports_count > 3
+                @difficulty_b = 50 + ((supports_count-3) * 10)
+            end
+        elsif builtin && slider || builtin && fixed || slider && fixed
+            if supports_count == 2
+                @difficulty_b = 30
+            elsif supports_count >= 9
+                @difficulty_b = 100
+            elsif supports_count > 2
+                @difficulty_b = 30 + ((supports_count-2) * 10)
+            end
+        elsif builtin || slider || fixed
+            if supports_count >= 10
+                @difficulty_b = 100
+            else
+                @difficulty_b = supports_count * 10
+            end
+            extern_joins_points = @difficulty_b
+            
+        end
+    end
+
+    def get_forces_points
+        forces_count = structure.count_forces_moments
+        if forces_count >= 10
+            @difficulty_f = 100
+        end
+        @difficulty_f = forces_count * 10
+        forces_moments_points = @difficulty_f
+    end
+
+    def make_xforce_ecuation()
+
+    end
+
+    def make_yforce_ecuation()
+
+    end
+
+    def make_moment_ecuation()
+
+    end
+
 end

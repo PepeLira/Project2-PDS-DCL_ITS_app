@@ -34,7 +34,7 @@ class Structure < ApplicationRecord
         end
     end
 
-    def count_forces_momments
+    def count_forces_moments
         get_forces_json.length() + get_moment_json.length()
     end
 
