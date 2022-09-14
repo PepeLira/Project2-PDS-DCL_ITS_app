@@ -41,6 +41,7 @@ class ProblemsController < ApplicationController
     
     @problem = Problem.new(problem_params)
     
+
     respond_to do |format|
       if @problem.save
         if @problem.step1 == "1"
@@ -115,6 +116,7 @@ class ProblemsController < ApplicationController
         :step2,
         :step3,
         :step4,
+        :nod_ref,
         structure_attributes: [:nodes_list, :segments_list, :struct_link, :force_values, :moment_values, :admin_teacher_id]
         )
     end
