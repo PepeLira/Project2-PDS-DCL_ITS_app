@@ -53,29 +53,24 @@ params.appletOnLoad = function(api) {
         var strType;
         var objNumber = api.getObjectNumber();
         var subl = []; //lista de puntos
-        var node_value = {
-            nombre: '',
-            tipo: 0,
-            x: 0,
-            y: 0,
-            magnitud: null
-        };
+        var i;
         var myCurrentlink = ''; //resultado de json
         var lMomentumPoints = [];        
         var lconx = []; //lista conexiones segmentos + vectores
         var lvectores = []; //lista vectores
-        for (var i=0; i < objNumber; i++) {
+        for (i=0; i < objNumber; i++) {
             strName = api.getObjectName(i);                    
-            strType = api.getObjectType(strName);                    
+            strType = api.getObjectType(strName);
+            
             if (strType === 'point') {
-                node_value.nombre = strName;
-                node_value.tipo = api.getPointStyle(strName);
-                node_value.x = api.getXcoord(strName);
-                node_value.y = api.getYcoord(strName);
-                if (node_value.tipo === 3) {
-                    lMomentumPoints.push(node_value);
+                if (api.getPointStyle(strName) === 3) {
+                    lMomentumPoints.push({nombre: strName,  
+                                        magnitude: 0 });
                 }
-                subl.push(node_value);
+                subl.push({nombre: strName, 
+                        tipo: api.getPointStyle(strName), 
+                        x: api.getXcoord(strName),
+                        y: api.getYcoord(strName) });
             } else if (strType === 'segment' || strType === 'vector') {
                 var smt_vct_values = {
                 iType: api.getDefinitionString(strName),
