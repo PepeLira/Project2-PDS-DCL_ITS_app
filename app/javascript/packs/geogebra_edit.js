@@ -1,3 +1,4 @@
+//Variables
 var params = {"appName": "classic",
                 "width":800,
                 "height":600,
@@ -18,13 +19,16 @@ var params = {"appName": "classic",
                 "enableShiftDragZoom": false,
                 "perspective":2,
                 "grid":true};
+var myNodes = document.getElementById("myNodes"); // lista de puntos
+var mySegments = document.getElementById("mySegments"); // lista de segmentos y vectores
+var mySavedLink = document.getElementById("mySavedLink"); //saved link total state
+var myForceVectors = document.getElementById("myForceValues"); // lista de vectores
+var myMomentumValues = document.getElementById("myMomentumValues"); // lista de nodos que son momentos
+//End Variables
 params.appletOnLoad = function(api) {
     api.setGridVisible(true);
     api.setPointCapture(1,2)
-    var strLength = 150;
-    var myNodes = document.getElementById("myNodes"); // lista de puntos
-    var mySegments = document.getElementById("mySegments"); // lista de segmentos y vectores
-    var mySavedLink = document.getElementById("mySavedLink"); //saved link total state
+    var strLength = 150;    
     function addListener(objName) { 
         //textarea1.value = "add: " + objName + "\n" + textarea1.value.substring(0, strLength );	
         printConstructionState();
@@ -48,18 +52,19 @@ params.appletOnLoad = function(api) {
         var strName;
         var strType;
         var objNumber = api.getObjectNumber();
-        var strState = "Number of objects: " + objNumber;
         var subl = []; //lista de puntos
         var node_value = {
             nombre: '',
             tipo: 0,
             x: 0,
-            y: 0
-        };          
-        var lconx = []; //lista conexiones
+            y: 0,
+            magnitud: null
+        };
+        var myCurrentlink = ''; //resultado de json
+        var lMomentumPoints = [];        
+        var lconx = []; //lista conexiones segmentos + vectores
+        var lvectores = []; //lista vectores
         for (var i=0; i < objNumber; i++) {
-            var subl2 = []; // lista por punto
-            var lconx2 = [];// lista por conexion
             strName = api.getObjectName(i);                    
             strType = api.getObjectType(strName);                    
             if (strType === 'point') {
@@ -67,22 +72,26 @@ params.appletOnLoad = function(api) {
                 node_value.tipo = api.getPointStyle(strName);
                 node_value.x = api.getXcoord(strName);
                 node_value.y = api.getYcoord(strName);
-                subl2.push(JSON.stringify(node_value));
-                subl.push(subl2);
-                strState += "\n" + strName+ ' x: ' + node_value.x + ' y: ' + node_value.y + ' style: '+ node_value.tipo;
+                if (node_value.tipo === 3) {
+                    lMomentumPoints.push(node_value);
+                }
+                subl.push(node_value);
             } else if (strType === 'segment' || strType === 'vector') {
                 var smt_vct_values = {
                 iType: api.getDefinitionString(strName),
-                iLength: api.getValue(strName)
+                iLengthOrMagnitud: api.getValue(strName)
                 };
-                strState += "\n" + smt_vct_values.iType + ' L: ' + smt_vct_values.iLength;
-                lconx2.push(JSON.stringify(smt_vct_values));
-                lconx.push(lconx2);
+                lconx.push(smt_vct_values);
+                if (strType === 'vector') {
+                    lvectores.push(smt_vct_values);
+                }
             }
         }
-        mySegments.value = lconx;
+        mySegments.value = JSON.stringify(lconx);
         mySavedLink.value = api.getBase64();              
-        myNodes.value = subl; // lista de puntos
+        myNodes.value = JSON.stringify(subl); // lista de puntos
+        myForceVectors.value = JSON.stringify(lvectores); // lista vectores
+        myMomentumValues.value = JSON.stringify(lMomentumPoints);
     }
     // register add, remove, rename and update listeners
     api.registerAddListener(addListener);
@@ -94,9 +103,3 @@ var applet = new GGBApplet(params, true);
 window.addEventListener("load", function() { 
     applet.inject('ggb-element');
 });
-
-function mchange(){
-    var buttonFinished = document.getElementById("isFinished");
-    var pid = document.getElementById("ihavename");
-    pid.innerHTML = applet.getBase64();
-}
