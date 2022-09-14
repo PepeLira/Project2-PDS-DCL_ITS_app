@@ -15,23 +15,24 @@
 
   <div class="field">
     <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title, :value => @title%>
+    <%= form.text_field :title, style: "width:70%"%>
   </div>
-
+<br>
+<br>
   <div class="field">
     <% if @problem.image.attached? %>
-      <%= image_tag @problem.image, style: "width: 200px; display: block"%>
+      <%= image_tag @problem.image, style: "width: 600px; display: block"%>
     <% end %>
 
     <% form.label :image %>
-    <%= form.file_field :image, class: "form-control"%>
+    <%= form.file_field :image, class: "form-control", style: "width:70%"%>
   </div>
-
+<br>
   <div class="field">
     <%= form.label :description, style: "display: block" %>
-    <%= form.text_area :description %>
+    <%= form.text_area :description, style: "width:70%" %>
   </div>
-
+<br>
   <div class="field">
     <%= form.label "Dibujar el diagrama para un DCL", style: "display: block" %>
     <p>Circulo para nodos</p>
@@ -43,7 +44,7 @@
     <p>+ para momento</p>
 
     <div id="ggb-element"></div> 
-
+<br>
     <h3>Pasos</h3>
     <div>
       <td>
@@ -102,23 +103,27 @@
     <%= form.fields_for :structure do |s| %>
       <div class="field">
         <%= s.label :nodes_list %><br />
-        <%= s.text_area :nodes_list, id: "myNodes"%>
+        <%= s.text_area :nodes_list, id: "myNodes", style: "width:70%"%>
       </div>
+      <br>
       <div class="field">
         <%= s.label :segments_list %><br />
-        <%= s.text_area :segments_list, id: "mySegments" %>
+        <%= s.text_area :segments_list, id: "mySegments", style: "width:70%" %>
       </div>
+      <br>
       <div class="field">
         <%= s.label :struct_link %><br />
-        <%= s.text_area :struct_link, id: "mySavedLink" %>
+        <%= s.text_area :struct_link, id: "mySavedLink", style: "width:70%" %>
       </div>
+      <br>
       <div class="field">
         <%= s.label :force_values %><br />
-        <%= s.text_area :force_values, id: "myForceValues" %>
+        <%= s.text_area :force_values, id: "myForceValues", style: "width:70%" %>
       </div>
+      <br>
       <div class="field">
         <%= s.label :moment_values %><br />
-        <%= s.text_area :moment_values, id: "myMomentumValues" %>
+        <%= s.text_area :moment_values, id: "myMomentumValues", style: "width:70%" %>
       </div> 
       <%= s.hidden_field :admin_teacher_id, :value => 1 %>
     <% end %>

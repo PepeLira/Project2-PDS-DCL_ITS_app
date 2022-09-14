@@ -1,4 +1,6 @@
 //Variables
+var element = document.getElementById("base64_id")
+var myBase = element.getAttribute("base64");
 var params = {"appName": "classic",
                 "width":800,
                 "height":600,
@@ -18,7 +20,9 @@ var params = {"appName": "classic",
                 "useBrowserForJS":true,
                 "enableShiftDragZoom": false,
                 "perspective":2,
-                "grid":true};
+                "grid":true,
+                "ggbBase64": myBase
+            };
 var myNodes = document.getElementById("myNodes"); // lista de puntos
 var mySegments = document.getElementById("mySegments"); // lista de segmentos y vectores
 var mySavedLink = document.getElementById("mySavedLink"); //saved link total state
