@@ -5,9 +5,9 @@ var params = {"appName": "classic",
                 "borderColor":null,
                 "showMenuBar":true,
                 "customToolbar":"0 || 1 || 15 || 7 || 38 || 36 || 17",
+                "enableLabelDrags":true,
                 "allowStyleBar":true,
                 "showAlgebraInput":true,
-                "enableLabelDrags":false,
                 "enableShiftDragZoom":true,
                 "capturingThreshold":null,
                 "showToolBarHelp":false,
@@ -37,6 +37,10 @@ params.appletOnLoad = function(api) {
 
     function renameListener(oldObjName, newObjName) {
         //textarea1.value = "rename: " + objName + "\n" + textarea1.value.substring(0, strLength );	
+        printConstructionState();
+    }
+
+    function undoListener(objName) {
         printConstructionState();
     }
 
@@ -84,6 +88,7 @@ params.appletOnLoad = function(api) {
     api.registerAddListener(addListener);
     api.registerRemoveListener(removeListener);
     api.registerRenameListener(renameListener);
+    api.registerClientListener(undoListener);
 }
 var applet = new GGBApplet(params, true);
 window.addEventListener("load", function() { 
