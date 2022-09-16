@@ -1,3 +1,4 @@
+require 'json'
 class Problem < ApplicationRecord
     belongs_to :admin_teacher
     belongs_to :structure

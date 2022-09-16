@@ -26,6 +26,7 @@ class Structure < ApplicationRecord
         JSON.load(moment_values)
     end
 
+
     def get_node(tag)
         get_nodes_json.each do |node|
             if node["nombre"] == tag

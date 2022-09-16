@@ -1,0 +1,17 @@
+<div class="jumbotron text-center">
+   <h2>Students</h2>
+</div>
+
+<div class="container">
+  <p style="color: green"><%= notice %></p>
+  <h3> Student Id: <%= @student.id %></h3>
+  <%= render @student %>
+  
+  <div><br>
+    <%= link_to "Edit student", edit_student_path(@student) %>
+  </div>
+  <br>
+  
+  <%= button_to "Delete student", @student, method: :delete, :class => "btn btn-danger" %>
+
+</div>

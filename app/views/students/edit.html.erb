@@ -1,0 +1,16 @@
+<div class="jumbotron text-center">
+  <h2>Editing student</h2> 
+</div>
+
+<div class="container">
+  <%= render "form", student: @student %>
+  <br>
+  <div>
+    <td>   
+      <%= link_to "Show this student", @student, :class => "btn btn-primary" %> 
+      <%= link_to "Back to students", students_path, :class => "btn btn-primary" %>
+    </td>
+    <br>
+  </div>
+  <br>
+</div>

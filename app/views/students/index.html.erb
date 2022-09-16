@@ -1,0 +1,25 @@
+<div class="jumbotron text-center">
+  <h2>Students</h2> 
+</div>
+
+<div id="students">
+  <div class="container">
+    <div class="row">
+      <% @students.each do |student| %>
+        <div class="col-sm-4">
+          <%= render student %>
+          <p>
+            <%= link_to "Show this student", student %>
+          </p>
+          <br>
+        </div>
+      <% end %>
+    </div> 
+  </div>
+</div>
+
+<div class="container">
+  <td>
+    <%= link_to "New student", new_student_path, :class => "btn btn-primary" %>    
+  </td>
+</div>
