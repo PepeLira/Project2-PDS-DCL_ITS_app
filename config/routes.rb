@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'task/view'
   resources :structures
   resources :problems
   resources :admin_teachers
@@ -12,4 +13,6 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root 'admin_teachers#index'
+
+  get 'task(/:id)', to: 'task#view'
 end
