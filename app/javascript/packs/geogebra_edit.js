@@ -74,7 +74,8 @@ params.appletOnLoad = function(api) {
             } else if (strType === 'segment' || strType === 'vector') {
                 var smt_vct_values = {
                 iType: api.getDefinitionString(strName),
-                iLengthOrMagnitud: api.getValue(strName)
+                Magnitud_o_distancia: api.getValue(strName),
+                Angulo: null
                 };
                 lconx.push(smt_vct_values);
                 if (strType === 'vector') {

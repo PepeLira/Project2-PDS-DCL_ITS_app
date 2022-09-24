@@ -35,6 +35,7 @@ class ProblemsController < ApplicationController
 
   # GET /problems/1/edit
   def edit
+    @title = "Problem #" + (@problem.id).to_s
   end
 
   # POST /problems or /problems.json
@@ -117,7 +118,7 @@ class ProblemsController < ApplicationController
         :step2,
         :step3,
         :step4,
-        structure_attributes: [:nodes_list, :segments_list, :struct_link, :force_values, :moment_values, :admin_teacher_id]
+        structure_attributes: [:nodes_list, :segments_list, :struct_link, :force_values, :moment_values, :admin_teacher_id, :moment_reference]
       )
     end
 end
