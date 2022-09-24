@@ -38,14 +38,6 @@ class Problem < ApplicationRecord
         @step4
     end
 
-    def nod_ref=(nod_ref)
-        @nod_ref = nod_ref
-    end
-
-    def nod_ref
-        @nod_ref
-    end
-
 
     def get_supports_points
         supports_count = structure.support_count

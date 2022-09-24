@@ -28,6 +28,7 @@ class ProblemsController < ApplicationController
     else
       @title = "Problem #1" 
     end
+    @structure = Structure.new
     @problem = Problem.new
     @problem.build_structure
   end
@@ -116,8 +117,7 @@ class ProblemsController < ApplicationController
         :step2,
         :step3,
         :step4,
-        :nod_ref,
         structure_attributes: [:nodes_list, :segments_list, :struct_link, :force_values, :moment_values, :admin_teacher_id]
-        )
+      )
     end
 end
