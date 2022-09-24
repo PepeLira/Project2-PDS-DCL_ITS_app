@@ -65,6 +65,9 @@ class ProblemsController < ApplicationController
           @step4 = Step.new(title: nil, description: "nn", step_type: "Ecuaciones", problem_id: @problem.id)
           @step4.save
         end
+
+        create_an_asociated_task(@problem)
+        
         format.html { redirect_to problem_url(@problem), notice: "Problem was successfully created." }
         format.json { render :show, status: :created, location: @problem }
       else
@@ -98,6 +101,10 @@ class ProblemsController < ApplicationController
   end
 
   private
+
+    def create_an_asociated_task(problem)
+      Task.create(problem: problem)
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_problem
       @problem = Problem.find(params[:id])
