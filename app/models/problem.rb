@@ -149,6 +149,16 @@ class Problem < ApplicationRecord
         dist_to_moment = 0
         nod_ref = structure.moment_reference
         pr_nodes = structure.get_nodes_json()
+
+        #nod_ref = pr_nodes.find{|e| e['nombre'] == nod_ref}
+
+        xy_moments.each do |m|
+            #find the nodes and compare distances to multiply
+            cur_moment_node = pr_nodes.find{|e| e['nombre'] == m['nombre']}
+            x_pos = cur_moment_node['x']
+            y_pos = cur_moment_node['y']
+            m['magnitude'] = nod_ref
+        end
         xy_moments
     end
 
