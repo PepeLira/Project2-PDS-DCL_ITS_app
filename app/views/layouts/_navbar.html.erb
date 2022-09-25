@@ -14,6 +14,11 @@
             <li class="nav-item">
                 <%= link_to "Problems Available", problems_url, class: "nav-link" %>
             </li>
+            <% if student_logged_in? %>
+                <li li class="nav-item">
+                    <%= link_to "Tareas", "/tasks/index", method: "get", class: "nav-link" %>
+                </li>
+            <% end %>
             <% if logged_in? %>
                 <li li class="nav-item">
                     <%= link_to "Log out", logout_path, method: "delete", class: "nav-link" %>

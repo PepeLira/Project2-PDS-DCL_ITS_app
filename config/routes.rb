@@ -14,5 +14,6 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root 'admin_teachers#index'
 
-  get 'task(/:id)', to: 'task#view'
+  get 'task(/:id)', to: 'task#view', :as => :task
+  get 'tasks/index', to: 'task#index'
 end
