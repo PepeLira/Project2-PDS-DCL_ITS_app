@@ -12,10 +12,11 @@
                 <li class="nav-item">
                     <%= link_to "Admin Teacher", admin_teachers_url, class: "nav-link" %>
                 </li>
-            <% end %>
-            <% if teacher_logged_in? %>
                 <li class="nav-item">
                     <%= link_to "Problems Available", problems_url, class: "nav-link" %>
+                </li>
+                <li class="nav-item">
+                    <%= link_to "Students", students_url, class: "nav-link" %>
                 </li>
             <% end %>
             <% if student_logged_in? %>
