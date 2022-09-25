@@ -2,3 +2,9 @@
 import { Turbo } from "@hotwired/turbo-rails"
 Turbo.session.drive = false
 import "controllers"
+import "popper"
+import "bootstrap"
+//= require jquery3
+//= require popper
+//= require bootstrap-sprockets
+import * as bootstrap from "bootstrap"

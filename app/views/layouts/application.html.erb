@@ -8,21 +8,23 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://www.geogebra.org/apps/deployggb.js"></script>
   
 
     <%= javascript_importmap_tags %>
+    
 
   </head>
 
   <body>
     <%= render "layouts/navbar" %>
-    <div class="container">
-      <%= yield %>
-    </div>
+    
+    <main role="main" class="container">
+
+      <div class="starter-template">
+        <%= yield %>
+      </div>
+
+    </main>
   </body>
 </html>
