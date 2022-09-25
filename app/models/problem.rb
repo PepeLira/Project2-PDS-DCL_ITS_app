@@ -105,13 +105,13 @@ class Problem < ApplicationRecord
         xy_forces = []
         supports.each do |support|
             if support["tipo"] == 1 #empotrado
-                xy_forces.push(support)
+                xy_forces.push(support['nombre']+x_or_y)
             elsif support["tipo"] == 2
                 if x_or_y == 'y'
-                    xy_forces.push(support) #deslizante
+                    xy_forces.push(support['nombre']+x_or_y) #deslizante
                 end
             elsif (6..9).include?(support["tipo"]) #fijo
-                xy_forces.push(support)
+                xy_forces.push(support['nombre']+x_or_y)
             end
         end #filtrar en x e y y concatenar el x al nombre del punto o el y
         xy_forces
@@ -123,12 +123,12 @@ class Problem < ApplicationRecord
         y_forces = []
         xy_force_vectors.each do |xy_force|
             if x_or_y == 'x'
-                if xy_force != nil
-                    x_forces.push(xy_force['Magnitud_o_distancia'] * Math.cos(xy_force['Angulo']))
+                if xy_force['Angulo'] != nil
+                    x_forces.push(xy_force['Magnitud_o_distancia'].to_s + ' * ' + 'cos(' + xy_force['Angulo'].to_s + ')')
                 end
             elsif x_or_y == 'y'
-                if xy_force != nil
-                    y_forces.push(xy_force['Magnitud_o_distancia'] * Math.sin(xy_force['Angulo']))
+                if xy_force['Angulo'] != nil
+                    y_forces.push(xy_force['Magnitud_o_distancia'].to_s + ' * ' + 'sin(' + xy_force['Angulo'].to_s + ')')
                 end
             end
         end
@@ -140,17 +140,25 @@ class Problem < ApplicationRecord
     end
 
     def make_xforce_ecuation()        
-        x_support_forces = obtain_support_forces('x') #nombrarlas segun el nodo ej: cx, fx, dx
+        x_support_forces = obtain_support_forces('x')
         x_force_vectors = xy_force_vectors('x')
-        #merge forces y arreglar el view
-        x_force_vectors #este es prueba
+        total_forces = x_support_forces + x_force_vectors
+        forces_for_the_view = ''
+        total_forces.each do |f|
+            forces_for_the_view += ' + ' + f
+        end
+        forces_for_the_view
     end
 
     def make_yforce_ecuation()
-        y_support_forces = obtain_support_forces('y') #nombrarlas segun el nodo ej: cy, fy, dy
+        y_support_forces = obtain_support_forces('y')
         y_force_vectors = xy_force_vectors('y')
-        #merge forces y arreglar el view
-        y_force_vectors #este es de prueba
+        total_forces = y_support_forces + y_force_vectors
+        forces_for_the_view = ''
+        total_forces.each do |f|
+            forces_for_the_view += ' + ' + f
+        end
+        forces_for_the_view
     end
 
     def make_moment_ecuation()
