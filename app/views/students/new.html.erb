@@ -15,9 +15,10 @@
     <%= f.label :password %><br/>
     <%= f.password_field :password, class: "form-control" %>
     </div>
-    
+    <br />
     <div class="form-group">
-    <%= f.submit %>
+    <%= f.submit "Create Student", class: "btn btn-primary" %>
+    <%= link_to "Log in", "login", :class => "btn btn-primary"%>
     </div>
  
 <% end %>

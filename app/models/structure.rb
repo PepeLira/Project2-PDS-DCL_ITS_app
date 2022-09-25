@@ -35,40 +35,48 @@ class Structure < ApplicationRecord
     end
 
     def count_forces_moments
-        get_forces_json.length() + get_moment_json.length()
+        if get_forces_json.present?
+            get_forces_json.length() + get_moment_json.length()
+        end
     end
 
     def get_supports
         supports = []
-        get_nodes_json.each do |node|
-            if ![3,5,4,0].include?(node["tipo"])
-                supports.push(node)
+        if get_nodes_json.present?
+            get_nodes_json.each do |node|
+                if ![3,5,4,0].include?(node["tipo"])
+                    supports.push(node)
+                end
             end
         end
         supports
     end
 
     def support_count
-        get_supports.length
+        if get_supports.present?
+            get_supports.length
+        end
     end
 
     def has_support?(type)
-        if type == "empotrado"
-            get_supports.each do |support|
-                if support["tipo"] == 1
-                    return true
+        if get_supports.present?
+            if type == "empotrado"
+                get_supports.each do |support|
+                    if support["tipo"] == 1
+                        return true
+                    end
                 end
-            end
-        elsif type == "deslizante"
-            get_supports.each do |support|
-                if support["tipo"] == 2
-                    return true
+            elsif type == "deslizante"
+                get_supports.each do |support|
+                    if support["tipo"] == 2
+                        return true
+                    end
                 end
-            end
-        elsif type == "fijo"
-            get_supports.each do |support|
-                if (6..9).include?(support["tipo"])
-                    return true
+            elsif type == "fijo"
+                get_supports.each do |support|
+                    if (6..9).include?(support["tipo"])
+                        return true
+                    end
                 end
             end
         end

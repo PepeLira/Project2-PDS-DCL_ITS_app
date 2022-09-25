@@ -73,12 +73,14 @@ class Problem < ApplicationRecord
     end
 
     def get_forces_points
-        forces_count = structure.count_forces_moments
-        if forces_count >= 10
-            @difficulty_f = 100
+        if structure.count_forces_moments.present?
+            forces_count = structure.count_forces_moments
+            if forces_count >= 10
+                @difficulty_f = 100
+            end
+            @difficulty_f = forces_count * 10
+            forces_moments_points = @difficulty_f
         end
-        @difficulty_f = forces_count * 10
-        forces_moments_points = @difficulty_f
     end
 
     def make_xforce_ecuation()
