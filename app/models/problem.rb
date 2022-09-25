@@ -94,7 +94,7 @@ class Problem < ApplicationRecord
             elsif (6..9).include?(support["tipo"]) #fijo
                 xy_forces.push(support)
             end
-        end
+        end #filtrar en x e y y concatenar el x al nombre del punto o el y
         xy_forces
     end
 
@@ -104,12 +104,12 @@ class Problem < ApplicationRecord
         y_forces = []
         xy_force_vectors.each do |xy_force|
             if x_or_y == 'x'
-                if xy_force != null
-                    x_forces.push(xy_force.Magnitud_o_distancia * Math.cos(xy_force.Angulo))
+                if xy_force != nil
+                    x_forces.push(xy_force['Magnitud_o_distancia'] * Math.cos(xy_force['Angulo']))
                 end
             elsif x_or_y == 'y'
-                if xy_force != null
-                    y_forces.push(xy_force.Magnitud_o_distancia * Math.sin(xy_force.Angulo))
+                if xy_force != nil
+                    y_forces.push(xy_force['Magnitud_o_distancia'] * Math.sin(xy_force['Angulo']))
                 end
             end
         end
@@ -123,15 +123,22 @@ class Problem < ApplicationRecord
     def make_xforce_ecuation()        
         x_support_forces = obtain_support_forces('x') #nombrarlas segun el nodo ej: cx, fx, dx
         x_force_vectors = xy_force_vectors('x')
+        #merge forces y arreglar el view
+        x_force_vectors #este es prueba
     end
 
     def make_yforce_ecuation()
         y_support_forces = obtain_support_forces('y') #nombrarlas segun el nodo ej: cy, fy, dy
         y_force_vectors = xy_force_vectors('y')
+        #merge forces y arreglar el view
+        y_force_vectors #este es de prueba
     end
 
     def make_moment_ecuation()
-
+        xy_moments = support.get_moment_json()
+        dist_to_moment = 0
+        nod_ref = support.moment_reference
+        pr_nodes = support.get_nodes_json()
     end
 
 end
