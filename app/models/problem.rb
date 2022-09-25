@@ -83,12 +83,53 @@ class Problem < ApplicationRecord
         end
     end
 
-    def make_xforce_ecuation()
+    def obtain_support_forces(x_or_y)
+        supports = structure.get_supports()
+        xy_forces = []
+        supports.each do |support|
+            if support["tipo"] == 1 #empotrado
+                xy_forces.push(support)
+            elsif support["tipo"] == 2
+                if x_or_y == 'y'
+                    xy_forces.push(support) #deslizante
+                end
+            elsif (6..9).include?(support["tipo"]) #fijo
+                xy_forces.push(support)
+            end
+        end
+        xy_forces
+    end
 
+    def xy_force_vectors(x_or_y)
+        xy_force_vectors = structure.get_forces_json()
+        x_forces = []
+        y_forces = []
+        xy_force_vectors.each do |xy_force|
+            if x_or_y == 'x'
+                if xy_force != null
+                    x_forces.push(xy_force.Magnitud_o_distancia * Math.cos(xy_force.Angulo))
+                end
+            elsif x_or_y == 'y'
+                if xy_force != null
+                    y_forces.push(xy_force.Magnitud_o_distancia * Math.sin(xy_force.Angulo))
+                end
+            end
+        end
+        if x_or_y == 'x'
+            return x_forces
+        elsif x_or_y == 'y'
+            return y_forces
+        end
+    end
+
+    def make_xforce_ecuation()        
+        x_support_forces = obtain_support_forces('x') #nombrarlas segun el nodo ej: cx, fx, dx
+        x_force_vectors = xy_force_vectors('x')
     end
 
     def make_yforce_ecuation()
-
+        y_support_forces = obtain_support_forces('y') #nombrarlas segun el nodo ej: cy, fy, dy
+        y_force_vectors = xy_force_vectors('y')
     end
 
     def make_moment_ecuation()
