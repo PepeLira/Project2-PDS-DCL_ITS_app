@@ -1,10 +1,10 @@
 class Problem < ApplicationRecord
     belongs_to :admin_teacher
     belongs_to :structure
-    has_one :task
-    has_many :steps
+    has_one :task, dependent: :destroy
+    has_many :steps, dependent: :destroy
     accepts_nested_attributes_for :structure
-    has_one_attached :image
+    has_one_attached :image, dependent: :destroy
 
     def step1=(step1)
         @step1 = step1

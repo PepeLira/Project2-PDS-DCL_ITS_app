@@ -1,5 +1,5 @@
 class Step < ApplicationRecord
     belongs_to :problem
-    has_many :answers
-    has_many :responses
+    has_many :answers, dependent: :destroy
+    has_many :responses, dependent: :destroy
 end

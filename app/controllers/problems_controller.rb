@@ -67,7 +67,7 @@ class ProblemsController < ApplicationController
           @step4.save
         end
 
-        create_an_asociated_task(@problem)
+        # create_an_asociated_task(@problem)
         
         format.html { redirect_to problem_url(@problem), notice: "Problem was successfully created." }
         format.json { render :show, status: :created, location: @problem }

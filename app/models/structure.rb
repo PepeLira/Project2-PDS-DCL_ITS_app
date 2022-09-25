@@ -1,7 +1,7 @@
 require 'json'
 class Structure < ApplicationRecord
     belongs_to :admin_teacher
-    has_many :problems
+    has_many :problems, dependent: :destroy
 
     def get_nodes_json
         JSON.load(nodes_list)
