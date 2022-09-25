@@ -1,15 +1,5 @@
 <div id="<%= dom_id problem %>">
   <p>
-    <strong>Admin teacher:</strong>
-    <%= problem.admin_teacher_id %>
-  </p>
-
-  <p>
-    <strong>Structure:</strong>
-    <%= problem.structure_id %>
-  </p>
-
-  <p>
     <strong>Title:</strong>
     <%= problem.title%>
   </p>
@@ -21,7 +11,7 @@
   <% end %>
 
   <p>
-    <strong>Description:</strong>
+    <strong>Enunciado:</strong>
     <%= problem.description %>
   </p>
 
@@ -31,12 +21,12 @@
   </p>
 
   <p>
-    <strong>Force vector list:</strong>
+    <strong>Listado de Fuerzas:</strong>
     <%= problem.structure.force_values %>
   </p>
 
   <p>
-    <strong>Momentum list:</strong>
+    <strong>Listado de Momentos:</strong>
     <%= problem.structure.moment_values %>
   </p>
 

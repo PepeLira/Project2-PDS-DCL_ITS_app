@@ -6,10 +6,11 @@
 
 <div class="container">
   <p style="color: green"><%= notice %></p>
+  <br />
   <h3> Problem Id: <%= @problem.id %></h3>
   <%= render @problem %>
   <%= render "dificulty", difficulty_b: @difficulty_b, difficulty_f: @difficulty_f  %>
-
+  <br />
   <h3>Ecuaciones</h3>
   <em>ΣFx = <%= @forces_ecuation_x %></em><br>
   <em>ΣFy = <%= @forces_ecuation_y %></em><br>

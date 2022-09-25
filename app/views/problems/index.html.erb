@@ -1,23 +1,16 @@
 
-
+<br />
 <div class="jumbotron text-center">
   <h2>Problems</h2> 
 </div>
+<br />
 
-<div id="problems">
-  <div class="container">
+<div class="container">
     <div class="row">
-      <% @problems.each do |problem| %>
-        <div class="col-sm-4">
-          <%= render problem %>
-          <p>
-            <%= link_to "Show this problem", problem %>
-          </p>
-          <br>
-        </div>
-      <% end %>
-    </div> 
-  </div>
+        <% @problems.each do |problem| %>
+            <%= render "problem_resume", problem: problem %>
+        <% end %>
+    </div>
 </div>
 
 <div class="container">

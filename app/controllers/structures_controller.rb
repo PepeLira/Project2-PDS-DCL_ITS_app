@@ -65,6 +65,6 @@ class StructuresController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def structure_params
-      params.require(:structure).permit(:admin_teacher_id, :moment_reference)
+      params.require(:structure).permit(:admin_teacher_id, :nodes_list, :segments_list, :struct_link, :force_values, :moment_values, :admin_teacher_id, :moment_reference)
     end
 end

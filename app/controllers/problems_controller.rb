@@ -44,6 +44,7 @@ class ProblemsController < ApplicationController
     
     @problem = Problem.new(problem_params)
     
+    binding.pry
 
     respond_to do |format|
       if @problem.save
