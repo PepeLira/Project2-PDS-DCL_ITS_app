@@ -5,8 +5,11 @@
         </div>
         <ul class="nav navbar-nav">
             <li class="active"><a href="#">Home</a></li>
-            <li><%= link_to "Admin Teacher", admin_teachers_url %>
-            <li><%= link_to "Problems Available", problems_url %>
+            <li><%= link_to "Admin Teacher", admin_teachers_url %></li>
+            <li><%= link_to "Problems Available", problems_url %></li>
+            <% if logged_in? %>
+                <li><%= link_to "Log out", logout_path, method: "delete" %></li>
+            <% end %>
         </ul>
     </div>
 </nav>
