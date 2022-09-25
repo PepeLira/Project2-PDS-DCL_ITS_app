@@ -1,0 +1,7 @@
+<div class="container">
+    <div class="row">
+        <% @tasks.each do |task| %>
+            <%= render "task/task_resume", task: task, problem: task.problem %>
+        <% end %>
+    </div>
+</div>

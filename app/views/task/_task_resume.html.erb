@@ -1,0 +1,15 @@
+<div class="col-md-4">
+    <div class="card mb-4 box-shadow">
+        <%= image_tag problem.image, width: '50%', height: '50%', class:"card-img-top", style: "height: 225px; width: 100%; display: block;" %>
+        <div class="card-body">
+            <h4 class="mt-5">Tarea <%= problem.title %></h4>
+            <p class="card-text"><%=  problem.description %></p>
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                    <%= button_to "Revisar", task_path(task), :method => :get, class:"btn btn-sm btn-outline-secondary" %>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
