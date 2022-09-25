@@ -1,4 +1,5 @@
 class ProblemsController < ApplicationController
+  before_action :require_user
   before_action :set_problem, only: %i[ show edit update destroy ]
 
   # GET /problems or /problems.json

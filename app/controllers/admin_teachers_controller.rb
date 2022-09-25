@@ -1,5 +1,7 @@
 class AdminTeachersController < ApplicationController
+  before_action :require_user
   before_action :set_admin_teacher, only: %i[ show edit update destroy ]
+
 
   # GET /admin_teachers or /admin_teachers.json
   def index
