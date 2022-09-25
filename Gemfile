@@ -29,6 +29,8 @@ gem "jbuilder"
 
 gem 'jquery-rails'
 
+gem "jsbundling-rails"
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 
