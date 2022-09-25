@@ -1,6 +1,16 @@
 class StudentsController < ApplicationController
+    before_action :set_student, only: %i[ show edit ]
+    def index
+        require_user
+        @students = Student.all
+    end
+    
     def new
         @student = Student.new
+    end
+
+    def show
+        require_user
     end
 
     def create
@@ -23,7 +33,11 @@ class StudentsController < ApplicationController
       
     private
       
-    def student_params
-        params.require(:student).permit(:full_name, :email, :password)
-    end
+        def set_student
+            @student = Student.find(params[:id])
+        end
+
+        def student_params
+            params.require(:student).permit(:full_name, :email, :password)
+        end
 end
