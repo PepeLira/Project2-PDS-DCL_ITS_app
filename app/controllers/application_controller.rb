@@ -4,9 +4,13 @@ class ApplicationController < ActionController::Base
     def current_student
         @current_student ||= Student.find(session[:student_id]) if session[:student_id]
     end
+
+    def current_admin_teacher
+        @current_admin_teacher ||= AdminTeacher.find(session[:admin_teacher_id]) if session[:admin_teacher_id]
+    end
     
     def logged_in?
-        !!current_student
+        !!current_student || !!current_admin_teacher
     end
     
     def require_user

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_13_060034) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_25_020458) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -44,9 +44,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_13_060034) do
 
   create_table "admin_teachers", force: :cascade do |t|
     t.string "full_name"
-    t.string "password"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "password_digest"
+    t.string "email"
   end
 
   create_table "answers", force: :cascade do |t|
@@ -115,13 +116,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_13_060034) do
   create_table "students", force: :cascade do |t|
     t.string "email"
     t.string "full_name"
-    t.string "password"
     t.integer "extern_joins_stat"
     t.integer "forces_moments_stat"
     t.integer "con_rod_stat"
     t.integer "ball_joint_stat"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "password_digest"
   end
 
   create_table "tasks", force: :cascade do |t|
