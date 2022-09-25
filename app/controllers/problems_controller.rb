@@ -17,7 +17,7 @@ class ProblemsController < ApplicationController
     @difficulty_f = @problem.get_forces_points
     @forces_ecuation_x = @problem.make_xforce_ecuation()#"10 ∗ cos(60°) + Bx + 5 + 8 ∗ cos(45°) = 0"
     @forces_ecuation_y = @problem.make_yforce_ecuation()#"−10 ∗ sin(60°) + By − 8 ∗ sin(45°) + Dy − 5 = 0"
-    @moment_ecuation = " 3 ∗ 10 ∗ sin(60°) − 1 − 1 ∗ 8 ∗ cos(45°) − 6 ∗ 8 ∗ sin(45°) − 9 ∗ 5 + 1 ∗ 5 + 11 ∗ Dy"
+    @moment_ecuation = @problem.make_moment_ecuation()#" 3 ∗ 10 ∗ sin(60°) − 1 − 1 ∗ 8 ∗ cos(45°) − 6 ∗ 8 ∗ sin(45°) − 9 ∗ 5 + 1 ∗ 5 + 11 ∗ Dy"
   end
 
   # GET /problems/new
