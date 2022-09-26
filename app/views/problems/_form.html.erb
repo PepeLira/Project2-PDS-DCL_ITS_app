@@ -34,18 +34,54 @@
   </div>
 <br>
   <div class="field">
-    <%= form.label "Dibujar el diagrama para un DCL", style: "display: block" %>
+    
     <p>
+    <h2>Instrucciones</h2>
     <br />
-    Circulo para nodos<br />
-    Circulo sin relleno para apoyo deslizante<br />
-    Triangulo para apoyo fijo<br />
-    rombo relleno para rotula<br />
-    rombo sin relleno para biela<br />
-    X para empotrado<br />
-    + para momento<br />
-    </p>
-
+    <body>
+    <div class="row">
+        <div class="column1">
+          Simbolos:<br />
+          <%= image_tag("instructions/simbolos.jpg", width: "500px") %><br />   
+        </div>
+        <div class="column1">
+            Fuerza:<br />
+            <%= image_tag("instructions/fuerza.jpg", width: "500px") %><br />
+            
+            
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="column2 left">
+            Rotula:<br />
+            <%= image_tag("instructions/rotula.jpg", width: "250px") %><br />
+            <br />
+            Momento:<br />
+            <%= image_tag("instructions/momento.jpg", width: "250px") %><br />
+            <br />
+        </div>
+        <div class="column2 middle">
+            Biela:<br />
+            <%= image_tag("instructions/biela.jpg", width: "250px") %><br />
+            <br />
+            Fuerza:<br />
+            <%= image_tag("instructions/apoyo_deslizante.jpg", width: "250px") %><br />
+            <br />
+        </div>
+        <div class="column2 right">
+            Apoyo Empotrado:<br />
+            <%= image_tag("instructions/empotrado.jpg", width: "250px") %><br />
+            <br />
+            Apoyo fijo:<br />
+            <%= image_tag("instructions/apoyo_fijo.jpg", width: "250px") %><br />
+            <br />
+        </div>
+    </div>
+    <br />
+    <%= form.label "Dibujar el diagrama para un DCL", style: "display: block" %>
+ </body>
+    
     <div id="ggb-element"></div> 
 <br>
     <%= render "steps", form: form %>
