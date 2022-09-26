@@ -16,14 +16,6 @@ class Problem < ApplicationRecord
         @step1
     end
 
-    def step2=(step2)
-        @step2 = step2
-    end
-
-    def step2
-        @step2
-    end
-
     def step3=(step3)
         @step3 = step3
     end
