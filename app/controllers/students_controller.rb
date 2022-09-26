@@ -17,6 +17,7 @@ class StudentsController < ApplicationController
         @student = Student.new(student_params)
         if @student.save
             flash[:notice] = "Student created."
+            helpers.generate_next_task(@student)
             redirect_to root_path
         else
             render 'new'
