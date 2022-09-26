@@ -2,7 +2,45 @@
   <h1 class="mt-5">Tarea <%= @problem.title %></h1>
   <p><%= render "task/steps_progess_bar", current_step: "Representacion"  %></p>
 
-  <br />
-  <br />
-  <br />
+    <br><h3>Representar el diagrama del Problema</h3><br>
+    
+    <div id="ggb-element"></div> 
+    <br>
+    <br><h3>Parametros de la Estructura</h3><br>
+    <%= form_with(model: @structure) do |s| %>
+      <div class="field">
+        <%= s.label "Listado de Nodos" %><br />
+        <%= s.text_area :nodes_list, id: "myNodes", style: "width:70%"%>
+      </div>
+      <br>
+      <div class="field">
+        <%= s.label "Listado de segmentos" %><br />
+        <%= s.text_area :segments_list, id: "mySegments", style: "width:70%" %>
+      </div>
+      <br>
+      <div class="field">
+        <%= s.label "Nodo de referencia momentos" %> <br />
+        <%= s.text_area :moment_reference, id: "myMomentReferences", style: "width:70%"%>
+      </div>
+      <br>
+      <div class="field">
+        <%= s.label "Listado de fuerzas" %><br />
+        <%= s.text_area :force_values, id: "myForceValues", style: "width:70%" %>
+      </div>
+      <br>
+      <div class="field">
+        <%= s.label "Listado de momentos" %><br />
+        <%= s.text_area :moment_values, id: "myMomentumValues", style: "width:70%" %>
+      </div> 
+      <%= s.hidden_field :struct_link, id: "mySavedLink", style: "width:70%" %>
+      <%= s.hidden_field :admin_teacher_id, :value => 1 %>
+      <div>
+        <%= s.submit %>
+      </div>
+      <br />
+      <br />
+    <% end %>
+  </div>
+
+  <%= javascript_import_module_tag "packs/geogebra_edit" %>
 </div>

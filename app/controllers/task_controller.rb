@@ -13,6 +13,7 @@ class TaskController < ApplicationController
 
   def represent_step
     @problem = @task.problem
+    @structure = Structure.new
   end
 
   def dcl_step
