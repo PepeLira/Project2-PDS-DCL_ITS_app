@@ -50,7 +50,6 @@ class Problem < ApplicationRecord
         builtin = structure.has_support?("empotrado")
         slider = structure.has_support?("deslizante")
         fixed = structure.has_support?("fijo")
-
         if builtin && slider && fixed
             if supports_count == 3
                 @difficulty_b = 50
@@ -59,6 +58,7 @@ class Problem < ApplicationRecord
             elsif supports_count > 3
                 @difficulty_b = 50 + ((supports_count-3) * 10)
             end
+            self.extern_joins_points = @difficulty_b
         elsif builtin && slider || builtin && fixed || slider && fixed
             if supports_count == 2
                 @difficulty_b = 30
@@ -67,6 +67,7 @@ class Problem < ApplicationRecord
             elsif supports_count > 2
                 @difficulty_b = 30 + ((supports_count-2) * 10)
             end
+            self.extern_joins_points = @difficulty_b
         elsif builtin || slider || fixed
             if supports_count >= 10
                 @difficulty_b = 100
@@ -74,7 +75,6 @@ class Problem < ApplicationRecord
                 @difficulty_b = supports_count * 10
             end
             self.extern_joins_points = @difficulty_b
-            
         end
     end
 
