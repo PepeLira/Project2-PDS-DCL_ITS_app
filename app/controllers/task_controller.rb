@@ -21,7 +21,12 @@ class TaskController < ApplicationController
 
   def equation_step
     @problem = @task.problem
-  end 
+    @new_response = Response.new
+  end
+
+  def equation_step_post_version
+
+  end
 
   private
 

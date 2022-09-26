@@ -21,5 +21,8 @@ Rails.application.routes.draw do
   get 'task(/:id)/Ecuaciones', to: 'task#equation_step'
 
   get 'problem(/:id)/duplicated', to: 'problems#duplicate', as: 'duplicate'
+
+  resources :responses
+  post 'task(/:id)/Ecuaciones', to: 'task#equation_step_post_version'
   
 end

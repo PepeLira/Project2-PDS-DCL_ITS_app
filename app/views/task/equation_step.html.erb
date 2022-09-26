@@ -3,6 +3,28 @@
   <p><%= render "task/steps_progess_bar", current_step: "Ecuaciones"  %></p>
 
   <br />
+  <h5 class="mt-5">DCL</h5>
+  <div id="applet_container" ></div>
+  <div id="base64_id" base64=<%= @problem.structure.struct_link%> ></div>
+
+  <%= javascript_import_module_tag "packs/geogebra_show" %>
+
   <br />
-  <br />
+  <%= form_with(model: @new_response) do |form| %>
+
+    <div class='field'>
+      <%= form.label "xForce", style: "display: block" %>
+      <%= form.text_area :x_force, style: "width:70%"%>
+    </div>
+    <div class='field'>
+      <%= form.label "yForce", style: "display: block" %>
+      <%= form.text_area :y_force, style: "width:70%"%>
+    </div>
+    <div class='field'>
+      <%= form.label "Momento de fuerzas", style: "display: block" %>
+      <%= form.text_area :xy_momento, style: "width:70%"%>
+    </div>
+    <br />
+    <br />
+  <% end %>
 </div>
