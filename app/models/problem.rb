@@ -6,8 +6,9 @@ class Problem < ApplicationRecord
     accepts_nested_attributes_for :structure
     has_one_attached :image, dependent: :destroy
 
-    before_create :set_supports_points, :set_forces_points
+    before_create :set_stats, :set_supports_points, :set_forces_points
 
+    
     def step1=(step1)
         @step1 = step1
     end
@@ -67,7 +68,10 @@ class Problem < ApplicationRecord
                 @difficulty_b = supports_count * 10
             end
             self.extern_joins_points = @difficulty_b
+        else
+            self.extern_joins_points = 0
         end
+        
     end
 
     def get_forces_points
@@ -194,6 +198,14 @@ class Problem < ApplicationRecord
             moment_for_view += ' + ' + m
         end
         moment_for_view
+    end
+
+    private
+    def set_stats
+        self.extern_joins_points = 0
+        self.forces_moments_points = 0
+        self.con_rod_points = 0
+        self.ball_joint_points = 0
     end
 
 end
