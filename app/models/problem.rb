@@ -162,21 +162,34 @@ class Problem < ApplicationRecord
     end
 
     def make_moment_ecuation()
-        xy_moments = structure.get_moment_json()
-        dist_to_moment = 0
+        xy_moments = structure.get_moment_json()        
         nod_ref = structure.moment_reference
         pr_nodes = structure.get_nodes_json()
+        dist_to_momentx = 0
+        dist_to_momenty = 0
+        moment_xy = []
 
-        #nod_ref = pr_nodes.find{|e| e['nombre'] == nod_ref}
+        nod_ref = pr_nodes.find{|e| e['nombre'] == nod_ref}
 
         xy_moments.each do |m|
-            #find the nodes and compare distances to multiply
             cur_moment_node = pr_nodes.find{|e| e['nombre'] == m['nombre']}
             x_pos = cur_moment_node['x']
             y_pos = cur_moment_node['y']
-            m['magnitude'] = nod_ref
+            dist_to_momentx = (nod_ref['x'] - cur_moment_node['x']).abs
+            dist_to_momenty = (nod_ref['y'] - cur_moment_node['y']).abs
+            if dist_to_momentx == 0
+                moment_xy.push('(' + m['magnitude'].to_s + ' * ' + dist_to_momenty.to_s + ')')
+            elsif dist_to_momenty == 0
+                moment_xy.push('(' + m['magnitude'].to_s + ' * ' + dist_to_momentx.to_s + ')')
+            elsif dist_to_momentx != 0 && dist_to_momenty != 0
+                moment_xy.push('(' + m['magnitude'].to_s + ' * ' + (dist_to_momentx + dist_to_momenty).to_s + ')')
+            end
         end
-        xy_moments
+        moment_for_view = ''
+        moment_xy.each do |m|
+            moment_for_view += ' + ' + m
+        end
+        moment_for_view
     end
 
 end
