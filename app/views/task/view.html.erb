@@ -1,14 +1,20 @@
 <div class="container">
-    <h1 class="mt-5">Tarea <%= @problem.title %></h1>
-    <p><%= render "task/steps_progess_bar" %></p>
-    <h3>Enunciado</h3>
-    <p>
-        <%=  @problem.description %>
-    </p>
+  <h1 class="mt-5">Tarea <%= @problem.title %></h1>
+  <p><%= render "task/steps_progess_bar" %></p>
+  <h3>Enunciado</h3>
+  <p>
+      <%= @problem.description %>
+  </p>
+  
+  <% if @problem.image.attached? %>
     <h3>Imagen</h3>
-    <% if @problem.image.attached? %>
     <p>
       <%= image_tag @problem.image, width: '50%', height: '50%', class: "rounded mx-auto d-block"%>
     </p>
   <% end %>
+  <br />
+  <%= render "problems/dificulty", difficulty_b: @problem.get_supports_points, difficulty_f: @problem.get_forces_points  %>
+  <br />
+  <br />
+  <br />
 </div>
