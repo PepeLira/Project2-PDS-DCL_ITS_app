@@ -22,7 +22,7 @@ class StructuresController < ApplicationController
   # POST /structures or /structures.json
   def create
     @structure = Structure.new(structure_params)
-
+    
     respond_to do |format|
       if @structure.save
         format.html { redirect_to structure_url(@structure), notice: "Structure was successfully created." }
