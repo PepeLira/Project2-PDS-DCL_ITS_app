@@ -83,16 +83,115 @@ class Problem < ApplicationRecord
         end
     end
 
-    def make_xforce_ecuation()
+    def obtain_support_forces(x_or_y)
+        supports = structure.get_supports()
+        xy_forces = []
+        supports.each do |support|
+            if support["tipo"] == 1 #empotrado
+                xy_forces.push(support['nombre']+x_or_y)
+            elsif support["tipo"] == 2
+                if x_or_y == 'y'
+                    xy_forces.push(support['nombre']+x_or_y) #deslizante
+                end
+            elsif (6..9).include?(support["tipo"]) #fijo
+                xy_forces.push(support['nombre']+x_or_y)
+            end
+        end #filtrar en x e y y concatenar el x al nombre del punto o el y
+        xy_forces
+    end
 
+    def xy_force_vectors(x_or_y)
+        xy_force_vectors = structure.get_forces_json()
+        x_forces = []
+        y_forces = []
+        xy_force_vectors.each do |xy_force|
+            if x_or_y == 'x'
+                if xy_force['Angulo'] != nil
+                    x_forces.push(xy_force['Magnitud_o_distancia'].to_s + ' * ' + 'cos(' + xy_force['Angulo'].to_s + ')')
+                end
+            elsif x_or_y == 'y'
+                if xy_force['Angulo'] != nil
+                    y_forces.push(xy_force['Magnitud_o_distancia'].to_s + ' * ' + 'sin(' + xy_force['Angulo'].to_s + ')')
+                end
+            end
+        end
+        if x_or_y == 'x'
+            return x_forces
+        elsif x_or_y == 'y'
+            return y_forces
+        end
+    end
+
+    def make_xforce_ecuation()        
+        x_support_forces = obtain_support_forces('x')
+        x_force_vectors = xy_force_vectors('x')
+        total_forces = x_support_forces + x_force_vectors
+        forces_for_the_view = ''
+        total_forces.each do |f|
+            forces_for_the_view += ' + ' + f
+        end
+        forces_for_the_view
     end
 
     def make_yforce_ecuation()
-
+        y_support_forces = obtain_support_forces('y')
+        y_force_vectors = xy_force_vectors('y')
+        total_forces = y_support_forces + y_force_vectors
+        forces_for_the_view = ''
+        total_forces.each do |f|
+            forces_for_the_view += ' + ' + f
+        end
+        forces_for_the_view
     end
 
     def make_moment_ecuation()
+        xy_moments = structure.get_moment_json()
+        xy_forces = structure.get_forces_json()
+        all_supports = structure.get_supports()
+        nod_ref = structure.moment_reference
+        pr_nodes = structure.get_nodes_json()
+        dist_to_momentx = 0
+        dist_to_momenty = 0
+        all_support_m = []
+        moment_xy = []
 
+        nod_ref = pr_nodes.find{|e| e['nombre'] == nod_ref}
+
+        xy_moments.each do |m|
+            moment_xy.push(m['magnitude'].to_s)
+        end
+
+        xy_forces.each do |f|
+            ss = f['iType'][7..7]
+            cur_moment_node = pr_nodes.find{|e| e['nombre'] == ss}
+            dist_to_momentx = (nod_ref['x'] - cur_moment_node['x']).abs
+            dist_to_momenty = (nod_ref['y'] - cur_moment_node['y']).abs
+            if dist_to_momentx == 0
+                moment_xy.push('(' + f['Magnitud_o_distancia'].to_s + ' * ' + dist_to_momenty.to_s + ')')
+            elsif dist_to_momenty == 0
+                moment_xy.push('(' + f['Magnitud_o_distancia'].to_s + ' * ' + dist_to_momentx.to_s + ')')
+            elsif dist_to_momentx != 0 && dist_to_momenty != 0
+                moment_xy.push('(' + f['Magnitud_o_distancia'].to_s + ' * ' + (dist_to_momentx + dist_to_momenty).to_s + ')')
+            end
+        end
+
+        all_supports.each do |sup|
+            dist_to_momentx = (nod_ref['x'] - sup['x']).abs
+            dist_to_momenty = (nod_ref['y'] - sup['y']).abs
+            if dist_to_momentx == 0
+                moment_xy.push('(' + dist_to_momenty.to_s + ' * ' + sup['nombre'] + 'y' + ')')
+            elsif dist_to_momenty == 0
+                moment_xy.push('(' + dist_to_momentx.to_s + ' * ' + sup['nombre'] + 'x' +')')
+            elsif dist_to_momentx != 0 && dist_to_momenty != 0
+                moment_xy.push('(' + dist_to_momentx.to_s + ' * ' + sup['nombre'] + 'x' + ' + ' + dist_to_momenty.to_s + sup['nombre'] + 'y' + ')')
+            end
+        end
+
+        moment_for_view = ''
+        moment_xy.each do |m|
+            moment_for_view += ' + ' + m
+        end
+        moment_for_view
     end
 
 end
