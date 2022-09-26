@@ -8,6 +8,21 @@ class Problem < ApplicationRecord
 
     before_create :set_stats, :set_supports_points, :set_forces_points
 
+    after_create :set_answers
+
+    def set_answers
+        Answer.create(step_id: @step1, content: (self.structure_id+1).to_s, answer_type: "a_structure_id")
+        step3_xforces = [obtain_support_forces("x"),xy_force_vectors("x")].to_json
+        step3_yforces = [obtain_support_forces("y"),xy_force_vectors("y")].to_json
+
+        Answer.create(step_id: @step3, content: step3_xforces, answer_type: "xforces")
+        Answer.create(step_id: @step3, content: step3_yforces, answer_type: "yforces")
+        Answer.create(step_id: @step3, content: self.structure.get_moment_json, answer_type: "moment")
+        Answer.create(step_id: @step4, content: make_xforce_ecuation, answer_type: "xforce")
+        Answer.create(step_id: @step4, content: make_yforce_ecuation, answer_type: "yforce")
+        Answer.create(step_id: @step4, content: make_moment_ecuation, answer_type: "moment_ecuation")
+    end
+
     
     def step1=(step1)
         @step1 = step1
