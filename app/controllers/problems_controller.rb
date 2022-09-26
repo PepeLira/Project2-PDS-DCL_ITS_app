@@ -50,10 +50,17 @@ class ProblemsController < ApplicationController
   def create
     
     @problem = Problem.new(problem_params)
+    some_null_values = false
+    temporal = JSON.load(problem_params['structure_attributes']['force_values'])
+    temporal.each do |t|
+      if t["Magnitud_o_distancia"] == nil || t["Angulo"] == nil
+        some_null_values = true
+      end
+    end
     
 
     respond_to do |format|
-      if @problem.step1 != "1" && @problem.step3 != "1" && @problem.step4 != "1"
+      if (@problem.step1 != "1" && @problem.step3 != "1" && @problem.step4 != "1") || some_null_values == true
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @problem.errors, status: :unprocessable_entity }
       else
