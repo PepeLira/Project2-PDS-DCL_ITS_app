@@ -100,23 +100,6 @@ class Problem < ApplicationRecord
         xy_forces
     end
 
-    def obtain_support_forces(x_or_y)
-        supports = structure.get_supports()
-        xy_forces = []
-        supports.each do |support|
-            if support["tipo"] == 1 #empotrado
-                xy_forces.push(support['nombre']+x_or_y)
-            elsif support["tipo"] == 2
-                if x_or_y == 'y'
-                    xy_forces.push(support['nombre']+x_or_y) #deslizante
-                end
-            elsif (6..9).include?(support["tipo"]) #fijo
-                xy_forces.push(support['nombre']+x_or_y)
-            end
-        end #filtrar en x e y y concatenar el x al nombre del punto o el y
-        xy_forces
-    end
-
     def xy_force_vectors(x_or_y)
         xy_force_vectors = structure.get_forces_json()
         x_forces = []
