@@ -2,6 +2,9 @@ require 'json'
 class Structure < ApplicationRecord
     belongs_to :admin_teacher
     has_many :problems, dependent: :destroy
+    [:nodes_list, :segments_list, :moment_reference, :force_values].each do |v|
+        validates v, presence: true
+    end    
 
     def get_nodes_json
         JSON.load(nodes_list)
