@@ -145,29 +145,48 @@ class Problem < ApplicationRecord
     end
 
     def make_moment_ecuation()
-        xy_moments = structure.get_moment_json()        
+        xy_moments = structure.get_moment_json()
+        xy_forces = structure.get_forces_json()
+        all_supports = structure.get_supports()
         nod_ref = structure.moment_reference
         pr_nodes = structure.get_nodes_json()
         dist_to_momentx = 0
         dist_to_momenty = 0
+        all_support_m = []
         moment_xy = []
 
         nod_ref = pr_nodes.find{|e| e['nombre'] == nod_ref}
 
         xy_moments.each do |m|
-            cur_moment_node = pr_nodes.find{|e| e['nombre'] == m['nombre']}
-            x_pos = cur_moment_node['x']
-            y_pos = cur_moment_node['y']
+            moment_xy.push(m['magnitude'].to_s)
+        end
+
+        xy_forces.each do |f|
+            ss = f['iType'][7..7]
+            cur_moment_node = pr_nodes.find{|e| e['nombre'] == ss}
             dist_to_momentx = (nod_ref['x'] - cur_moment_node['x']).abs
             dist_to_momenty = (nod_ref['y'] - cur_moment_node['y']).abs
             if dist_to_momentx == 0
-                moment_xy.push('(' + m['magnitude'].to_s + ' * ' + dist_to_momenty.to_s + ')')
+                moment_xy.push('(' + f['Magnitud_o_distancia'].to_s + ' * ' + dist_to_momenty.to_s + ')')
             elsif dist_to_momenty == 0
-                moment_xy.push('(' + m['magnitude'].to_s + ' * ' + dist_to_momentx.to_s + ')')
+                moment_xy.push('(' + f['Magnitud_o_distancia'].to_s + ' * ' + dist_to_momentx.to_s + ')')
             elsif dist_to_momentx != 0 && dist_to_momenty != 0
-                moment_xy.push('(' + m['magnitude'].to_s + ' * ' + (dist_to_momentx + dist_to_momenty).to_s + ')')
+                moment_xy.push('(' + f['Magnitud_o_distancia'].to_s + ' * ' + (dist_to_momentx + dist_to_momenty).to_s + ')')
             end
         end
+
+        all_supports.each do |sup|
+            dist_to_momentx = (nod_ref['x'] - sup['x']).abs
+            dist_to_momenty = (nod_ref['y'] - sup['y']).abs
+            if dist_to_momentx == 0
+                moment_xy.push('(' + dist_to_momenty.to_s + ' * ' + sup['nombre'] + 'y' + ')')
+            elsif dist_to_momenty == 0
+                moment_xy.push('(' + dist_to_momentx.to_s + ' * ' + sup['nombre'] + 'x' +')')
+            elsif dist_to_momentx != 0 && dist_to_momenty != 0
+                moment_xy.push('(' + dist_to_momentx.to_s + ' * ' + sup['nombre'] + 'x' + ' + ' + dist_to_momenty.to_s + sup['nombre'] + 'y' + ')')
+            end
+        end
+
         moment_for_view = ''
         moment_xy.each do |m|
             moment_for_view += ' + ' + m
