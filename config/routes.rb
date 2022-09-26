@@ -16,6 +16,10 @@ Rails.application.routes.draw do
 
   get 'task(/:id)', to: 'task#view', :as => :task
   get 'tasks/index', to: 'task#index'
+  get 'task(/:id)/Representacion', to: 'task#represent_step'
+  get 'task(/:id)/DCL', to: 'task#dcl_step'
+  get 'task(/:id)/Ecuaciones', to: 'task#equation_step'
 
   get 'problem(/:id)/duplicated', to: 'problems#duplicate', as: 'duplicate'
+  
 end

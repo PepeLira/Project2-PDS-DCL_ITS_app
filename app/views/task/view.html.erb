@@ -1,6 +1,6 @@
 <div class="container">
   <h1 class="mt-5">Tarea <%= @problem.title %></h1>
-  <p><%= render "task/steps_progess_bar" %></p>
+  <p><%= render "task/steps_progess_bar", current_step: "Enunciado"  %></p>
   <h3>Enunciado</h3>
   <p>
       <%= @problem.description %>

@@ -1,5 +1,10 @@
 <nav class="nav nav-pills nav-fill">
+  <a class="nav-item nav-link" href="/task/<%= @task.id %>">Enunciado</a> 
   <% @steps.each do |step| %>
-    <a class="nav-item nav-link" href="#"><%= step.step_type%></a> 
+    <% if current_step == step.step_type %>
+      <a class="nav-item nav-link active" href="/task/<%= @task.id %>/<%= step.step_type %>"><%= step.step_type %></a> 
+    <% else %>
+      <a class="nav-item nav-link" href="/task/<%= @task.id %>/<%= step.step_type %>"><%= step.step_type %></a> 
+    <% end %>
   <% end %>
 </nav>
