@@ -7,6 +7,13 @@ class ProblemsController < ApplicationController
     @problems = Problem.all
   end
 
+  # GET /problems or /problems.json
+  def duplicate
+    @problem1 = Problem.find(params[:id])
+    @problem = @problem1.dup
+    @problem.id = nil
+  end
+
   # GET /problems/1 or /problems/1.json
   def show
     @current_steps = []
