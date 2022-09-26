@@ -113,6 +113,10 @@ class ProblemsController < ApplicationController
     def create_an_asociated_task(problem)
       Task.create(problem: problem, student_id: 1)
     end
+
+    def create_an_asociated_task(problem)
+      Task.create(problem: problem, student_id: 1)
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_problem
       @problem = Problem.find(params[:id])

@@ -7,3 +7,4 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 AdminTeacher.create(full_name: "pepe", password: "123456789", email: "pepe@miuandes.cl");
+Student.create(full_name: "pp", password: "123", email: "pp@pp");
