@@ -8,7 +8,8 @@
             <p class="card-text"><%=  problem.description %></p>
             <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                    <%= link_to "Revisar", problem %>
+                    <%= link_to "Revisar", problem %>   &nbsp; | &nbsp;
+                    <%= link_to 'Duplicar', duplicate_path(problem.id) %>
                 </div>
             </div>
         </div>

@@ -16,4 +16,6 @@ Rails.application.routes.draw do
 
   get 'task(/:id)', to: 'task#view', :as => :task
   get 'tasks/index', to: 'task#index'
+
+  get 'problem(/:id)/duplicated', to: 'problems#duplicate', as: 'duplicate'
 end
