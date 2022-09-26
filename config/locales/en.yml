@@ -31,3 +31,10 @@
 
 en:
   hello: "Hello world"
+  activerecord:
+    attributes:
+      structure:
+        nodes_list: "Nodes"
+        segments_list: "Segments"
+        moment_reference: "Reference node"
+        force_values: "Forces"
